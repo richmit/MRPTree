@@ -4,6 +4,6 @@ MRPTree is C++ library implementing a generalization of the quadtree/octtree con
 This generalization is faster and easier to use than traditional tree based data structures.
 
 When I get some time I start publishing some code; however, right now
-this repo only contains some documentation.
+this repo only contains some [[https://richmit.github.io/MRPTree/tree_theory/trees.html][documentation]].
 
 -mitch
