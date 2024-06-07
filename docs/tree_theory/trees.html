@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-06-07 Fri 16:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=1024, initial-scale=1" />
+<title>RPTree</title>
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="DESCRIPTION FIXME" />
+<meta name="keywords" content="KEYWORDS FIXME" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 500px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>.subtitle { font-size: 0.6em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+<style>blockquote { margin-bottom: 0.5em; padding: 0.5em; background-color: #FFF8DC; border-left: 2px solid #A5573E; border-left-color: rgb(255, 228, 102); display: block; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 5em; margin-inline-end: 5em; } </style>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">RPTree
+<br />
+<span class="subtitle">Generalizing quadtrees &amp; octtrees</span>
+</h1>
+
+<div id="outline-container-org1796017" class="outline-2">
+<h2 id="org1796017"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+A quadtree is a nested 2D multi-resolution rectangular mesh.  We start with a rectangular region of \(\mathbb{R}^2\) and split it up into sub-rectangles.  We
+then continue the process with each of these new rectangles.  An octtree is the obvious generalization of the quadtree to 3D &#x2013; start with a cube, and
+recursively break it up into sub-cubes.  The recursive structure of these structures makes them a a natural fit with tree data structures.
+</p>
+
+<p>
+It's a simple exercise to mathematically generalize quadtrees and octtrees to \(2^n\mathrm{-trees}\); however, generalizing computer codes to impliment these
+generalizations is no trivial task.  Most usefull operations on \(2^n\mathrm{-trees}\) are inherently driven by the geometry of the mesh.  This introduces
+difficult algorithmic problems because of the diffucltiy of translateing these geometric problems into tree manipulation.  In this library we overcome these
+difficluties by dispensing with the tree data structure entirely.
+</p>
+
+<p>
+The key innovation at the heart of this new data structure is an enumeration scheme uniquely identifing both mesh cells and vertex points via an integer
+intimately related to the geometric structure of the grid. The close relationship between these integers and the grid geometry dramatically simplifies
+generalizeing the quadtree concept to arbitrary dimensions.  In order to define this enummeration we must make two simplifying assumptions about our trees:
+</p>
+
+<ul class="org-ul">
+<li>Our trees require a strictly regular refinement stratigy.  i.e. We always refine a cell of a \(2^n\mathrm{-tree}\) into \(n\) parts.</li>
+
+<li>We must choose a maximum refinement depth (we call this the tree's MESH-POWER and denote it by \(P\)).</li>
+</ul>
+
+<p>
+An example is in order. Suppose we wish to sample on the unit interval \([0, 1]\) &#x2013; i.e. the real numbers from 0 to 1 inclusive.
+</p>
+
+
+<div id="orgbe7ee26" class="figure">
+<p><a href="fig-1Dfam-00.pdf"><img src="fig-1Dfam-00.png" alt="fig-1Dfam-00.png" /></a>
+</p>
+</div>
+
+<p>
+Now suppose that we have determined that we don't need any more than 32 intervals (note 32 is a power of 2).  We can enumerate these potential sample
+points with integers like this:
+</p>
+
+
+<div id="org087ee63" class="figure">
+<p><a href="fig-1Dfam-01.pdf"><img src="fig-1Dfam-01.png" alt="fig-1Dfam-01.png" /></a>
+</p>
+</div>
+
+<p>
+We start a tree with one quad (a line sgement in this case) over the entire domain.
+</p>
+
+
+<div id="orgddc100f" class="figure">
+<p><a href="fig-1Dfam-02.pdf"><img src="fig-1Dfam-02.png" alt="fig-1Dfam-02.png" /></a>
+</p>
+</div>
+
+<p>
+Now we refine the right inteveral:
+</p>
+
+
+<div id="org2b8d3a5" class="figure">
+<p><a href="fig-1Dfam-03.pdf"><img src="fig-1Dfam-04.png" alt="fig-1Dfam-04.png" /></a>
+</p>
+</div>
+
+<p>
+Now we refine the interval just to the right of the midpoint:
+</p>
+
+
+<div id="org9c4a7f2" class="figure">
+<p><a href="fig-1Dfam-05.pdf"><img src="fig-1Dfam-05.png" alt="fig-1Dfam-05.png" /></a>
+</p>
+</div>
+
+<p>
+Finally we refine the right side of the interval we just refined:
+</p>
+
+
+<div id="orgfde01ff" class="figure">
+<p><a href="fig-1Dfam-06.pdf"><img src="fig-1Dfam-06.png" alt="fig-1Dfam-06.png" /></a>
+</p>
+</div>
+
+<p>
+For refrence, this set of nested intervals might be stored in a tree data structure liek so:
+</p>
+
+
+<div id="org3e8f062" class="figure">
+<p><a href="fig-1Dfam-07.pdf"><img src="fig-1Dfam-07.png" alt="fig-1Dfam-07.png" /></a>
+</p>
+</div>
+
+<p>
+Several key observations about our chosen integer coordinate system:
+</p>
+
+<ol class="org-ol">
+<li>The center point index of a cell, \(\mathtt{c}\), is never the center point of another cell.  <br />
+Therefore cell center point indexes may be used as a unique identifier for the cell.</li>
+<li>A cell's depth or level is counted from the top cell (level zero) down.  The level is \(\mathtt{P-1-ctz(c)}\).</li>
+<li>The indexes of a cell's end points are \(\mathtt{c}\pm\mathtt{c\,\&\,(\tilde{} c + 1)}\)</li>
+<li>The \(x\) value for an index may be computed as \(x=x_{min}+\frac{x_{max}-x_{min}}{2^P}i\)</li>
+</ol>
+
+<p>
+The first of our observations implies we can store our tree data in a dictionary data structure with the key being the cell integer index.  Additionally this
+implies that we may make use of the integer key optimized dictionary containers (usually a hash map) included as standard parts of modern programming
+languages. The third and fourth items on our list imply that we only need to store function values for each sample point &#x2013; not the \(x\) values in the domain.
+So not only can we use a standard data structure, but we only need to store one value per sample.  Additionally the formulas in the last three items allow us
+to compute a great many geometrically interesting things in constant time (\(\mathcal{O}(1)\)).  We don't even need to access the sample data from our tree to
+do so as many values are derived from the cell center index value directly.
+</p>
+
+<p>
+Generalizing our 1D example to \(\mathbb{R}^n\) is a simple matter of forming cross products of our construction in 1D!  We use the same integer coordinate
+systems on each axis.  We then form our integer key as the concatenation of the coordinate integers for each point. For example in the following, \(P=5\), quad
+tree the center point is at coordinates \((16,16)\).  So we might pack these two values in a 16-bit integer as \(\mathtt{0001000000010000 = 0x1010}\).  We can
+pack multidimensional tuples into native integers, or we can use more sophisticated data structures like C++'s <code>std::bitset</code>.  All that matters is that our
+data structure choice is hashable in our language of choice.
+</p>
+
+
+
+<div id="orge812c7a" class="figure">
+<p><a href="fig-2Dfam.pdf"><img src="fig-2Dfam.png" alt="fig-2Dfam.png" /></a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga6b0dd1" class="outline-3">
+<h3 id="orga6b0dd1"><span class="section-number-3">1.1.</span> The Details</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-org3e644bf" class="outline-4">
+<h4 id="org3e644bf"><span class="section-number-4">1.1.1.</span> Notation</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>\(P\) &#x2013; The mesh power of the RPTree</li>
+
+<li>\(D\) &#x2013; The dimension of the RPTree</li>
+
+<li>\(\mathbb{Z}_{k}\) &#x2013; Non-negative (unsigned) integers less than \(k\).
+\[\mathbb{Z}_{k} = \left\{ i\in\mathbb{Z} \,\vert\, 0\le i\lt k \right\}\]</li>
+
+<li>\(\mathcal{L}=\mathbb{Z}_{2^P+1}^D\) &#x2013; The \(D\) dimensional integer latice where integer coordinates are defined. <br />
+As usual, the power set of \(\mathcal{L}\) is written \(2^\mathcal{L}\). <br />
+We use \(\vec{\mathbf{n}}=[n_1, ..., n_D]\in\mathcal{L}\) for general elements of \(\mathcal{L}\). When \(D=1\), we use \(n\) instead of \(\vec{\mathbf{n}}\).</li>
+
+<li>\(\mathcal{C}\subset\mathcal{L}\) &#x2013; The subset \(\mathcal{L}\) coorispnoding to coordinates that can be used as a cell center. <br />
+As usual, the power set of \(\mathcal{C}\) is written \(2^\mathcal{C}\). <br />
+We use \(\vec{\mathbf{c}}=[c_1, ..., c_D]\in\mathcal{C}\) &#x2013; for general elements of \(\mathcal{C}\).  When \(D=1\), we use \(c\). <br />
+The set of cells and cell centers are in 1-1 coorispondance, and thus we use the cell centers to identify cells.  <br />
+As such, when we speak of a "set of cells", we are actually refering to a set of "cell centers" (integer coordinate tuples).</li>
+
+<li>\(L(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow \mathbb{Z}_P\) &#x2013; Level of cell \(\vec{\mathbf{c}}\)
+\[L(\vec{\mathbf{c}}) = (P-1)-\mathrm{ctz}(c_1)\]
+Note that \(\mathrm{ctz}(c_i)=\mathrm{ctz}(c_j)\) for all indexes of \(i\) &amp; \(j\). i.e. the levels of all coordinate components are equal.</li>
+
+<li>\(H(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow \mathbb{Z}_{2^P+1}\) &#x2013; Half the width of the cell.  
+\[H(\vec{\mathbf{c}})=2^{P-L(\vec{\mathbf{c}})-1} = 2^{\mathrm{ctz}(c_1)}\]
+This is just \(c_1\) with all bits cleared except the least significant one bit. <br />
+If we set \(\mathtt{c}=c_1\), then \(H(\vec{\mathbf{c}}) = \mathtt{c\,\&\,(\tilde{} c + 1)}\)</li>
+
+<li>\(W(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow \mathbb{Z}_{2^P+1}\) &#x2013; The width of the cell.  \(W(\vec{\mathbf{c}}) = 2 H(\vec{\mathbf{c}})\)</li>
+
+<li>\(A(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow \mathcal{C}\) &#x2013; Ancestor of level \(L(\vec{\mathbf{c}})-d\).  <br />
+\(A(\vec{\mathbf{c}}, 0)=\vec{\mathbf{c}}\).  <br />
+We call \(A(\vec{\mathbf{c}}, 1)\) the parent, and \(A(\vec{\mathbf{c}}, 2)\) the grandparent.</li>
+
+<li>\(C(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{C}\) &#x2013; The set of children of level \(L(\vec{\mathbf{c}})-d\).  <br />
+\(C(\vec{\mathbf{c}}, 0)=\vec{\mathbf{c}}\). <br />
+We call \(C(\vec{\mathbf{c}}, 1)\) the children, and \(C(\vec{\mathbf{c}}, 2)\) the grandchildren.</li>
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><a href="fig-cell-child1.pdf"><img src="fig-cell-child1.png" alt="fig-cell-child1.png" /></a></td>
+<td class="org-left"><a href="fig-cell-child2.pdf"><img src="fig-cell-child2.png" alt="fig-cell-child2.png" /></a></td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li><p>
+\(N(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{C}\) &#x2013; Neighbors of level \(L(\vec{\mathbf{c}})-d\).  <br />
+In the case \(d=0\), this set will be neighbors of the same "size" &#x2013; i.e. the \(H\) of each neighbor will be \(H(\vec{\mathbf{c}})\).
+</p>
+
+
+<div id="orgfdea755" class="figure">
+<p><a href="fig-cell-nbr02.pdf"><img src="fig-cell-nbr0.png" alt="fig-cell-nbr0.png" /></a>
+</p>
+</div></li>
+
+<li><p>
+\(E(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}\) &#x2013; The set of cell endpoints (i.e. the corners of the cell hyper-rectangle)
+\[E(c)= \left\{ c-H(c), c+H(c) \right\} \]
+\[E(\vec{\mathbf{c}})=E(c_1) \times \cdots \times E(c_D)=\prod_{j=1}^{D}E(c_j)\]
+</p>
+
+
+<div id="orgec1f1c3" class="figure">
+<p><a href="fig-cell-end.pdf"><img src="fig-cell-end.png" alt="fig-cell-end.png" /></a>
+</p>
+</div></li>
+
+<li><p>
+\(V(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}\) &#x2013; The set of vertexes of a cell are the cell's endpoints and the center.
+\[V(\vec{\mathbf{c}}) = E(\vec{\mathbf{c}}) \cup \{\vec{\mathbf{c}}\}\]
+</p>
+
+
+<div id="org053a1ec" class="figure">
+<p><a href="fig-cell-vert.pdf"><img src="fig-cell-vert.png" alt="fig-cell-vert.png" /></a>
+</p>
+</div></li>
+
+<li><p>
+\(G(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{L}\) &#x2013; Grid Points.  The vertexes of \(C(\vec{\mathbf{c}}, d)\) <br />
+\[G(\vec{\mathbf{c}}, d) = \bigcup_{\vec{\mathbf{c}'}\in C(\vec{\mathbf{c}}, d)} V(\vec{\mathbf{c}'})$  \]
+Note \(G(\vec{\mathbf{c}}, 0) = V(\vec{\mathbf{c}})\)
+</p>
+
+
+<div id="orgccae384" class="figure">
+<p><a href="fig-cell-grid2.pdf"><img src="fig-cell-grid2.png" alt="fig-cell-grid2.png" /></a>
+</p>
+</div></li>
+
+<li>\(\hat{R}(K) : 2^\mathcal{L} \rightarrow \mathcal{L}\) &amp; \(\check{R}(K) : 2^\mathcal{L} \rightarrow \mathcal{L}\) &#x2013; Upper, and lower, bounding rectangle coordinates for a set of coordinates \(K\) <br />
+\[\hat{R}(K)   = [\max_{n\in K}(n_1), \max_{n\in K}(n_2), ..., \max_{n\in K}(n_D)] \]
+\[\check{R}(K) = [\min_{n\in K}(n_1), \min_{n\in K}(n_2), ..., \min_{n\in K}(n_D)] \]
+Both \(\hat{R}(K)\) &amp; \(\check{R}(K)\) are vectors, and subscripts refere to compoents. Ex: \(\hat{R}_i(K)\)</li>
+
+<li><p>
+\(B(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{L}\) &#x2013; Boundary Vertexes of \(V(\vec{\mathbf{c}})\).
+\[B(\vec{\mathbf{c}}, d) = \{ \vec{\mathbf{c}'}\in V(\vec{\mathbf{c}}, d)\,\,\vert\,\,\exists i\in\mathbb{Z}_{P+1} \mathrm{with}\, \vec{\mathbf{c}'}_i=\hat{R}_i(K)\, \mathrm{or}\, \vec{\mathbf{c}'}_i=\check{R}_i(K) \}  \]
+Note \(B(\vec{\mathbf{c}}, 0) = E(\vec{\mathbf{c}})\)
+</p>
+
+
+<div id="orga367ad7" class="figure">
+<p><a href="fig-cell-bdry2.pdf"><img src="fig-cell-bdry2.png" alt="fig-cell-bdry2.png" /></a>
+</p>
+</div></li>
+
+<li><p>
+\(I(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{L}\) &#x2013; Interior Vertexes of \(V(\vec{\mathbf{c}})\).
+\[B(\vec{\mathbf{c}}, d) = V(\vec{\mathbf{c}}) \setminus B(\vec{\mathbf{c}}, d) \]
+Note \(I(\vec{\mathbf{c}}, 0) = \{\vec{\mathbf{c}}\}\) 
+</p>
+
+
+<div id="orgea8532c" class="figure">
+<p><a href="fig-cell-int22.pdf"><img src="fig-cell-int2.png" alt="fig-cell-int2.png" /></a>
+</p>
+</div></li>
+
+<li><p>
+\(Q(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}\) &#x2013; The set of all coordinates (all integer lattice points) contained in the cell
+\[Q(c)=\{ j\in\mathbb{Z}_{P+1} | E_0(c) \le c \le E_1(c) \}\]
+\[Q(\vec{\mathbf{c}})=Q(c_0) \times \cdots \times Q(c_n)=\prod_{j=0}^{n-1}Q(c_j)\]
+</p>
+
+
+<div id="orgd14cf1b" class="figure">
+<p><a href="fig-cell-coords.pdf"><img src="fig-cell-coords.png" alt="fig-cell-coords.png" /></a>
+</p>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org37ee965" class="outline-4">
+<h4 id="org37ee965"><span class="section-number-4">1.1.2.</span> Set enumeration</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Here we use the word <i>enumeration</i> from the field of computer science where it refers to the ability to traverse a data structure in a specific order.  Many
+of the functions defined in the previous sections have a range of \(2^\mathcal{L}\) or \(2^\mathcal{C}\), and as a practical matter it is advantageous to place an
+unambiguous order on these sets.
+</p>
+
+<p>
+When enumerating these sets we use the lexicographic ordering, and we use subscripts to denote the elements.  For example:
+\[E(\vec{\mathbf{c}})= \{ E_0(\vec{\mathbf{c}}), E_1(\vec{\mathbf{c}}), , ..., E_{2D}(\vec{\mathbf{c}}) \} \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org845a121" class="outline-4">
+<h4 id="org845a121"><span class="section-number-4">1.1.3.</span> Integer coordinates and real coordinates</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<ul class="org-ul">
+<li>\(\hat{X}\) &amp; \(\check{X}\) &#x2013; Upper, and lower, bounding rectangle <i>points</i> in \(\mathbb{R}^D\)</li>
+
+<li>\(X(\vec{\mathbf{n}})\) &#x2013; The \(\vec{\mathbf{x}}\) value associated to the index in the domain space of the function</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-text">MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org313177f" class="outline-3">
+<h3 id="org313177f"><span class="section-number-3">1.2.</span> Triangulating Quads</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Quads are triangulated such that:
+</p>
+
+<ul class="org-ul">
+<li>Every triangle has precisely one vertex at the center of the quad</li>
+<li>Every triangle has precisely two vertices in the boundary of the quad</li>
+<li>Every quad boundary point is a vertex of two triangles</li>
+<li>Triangles only overlap on edges and vertices</li>
+<li>A triangle vertex is a vertex of every triangle containing it</li>
+<li>No triangles are degenerate (area zero or three collinear vertexes)</li>
+</ul>
+
+<p>
+If all quads are the same size, we say the tree is balanced level 0 (i.e. the depth of all neighboring quads are equal).  This situation is illustrated below:
+</p>
+
+
+<div id="orgc9962bc" class="figure">
+<p><a href="fig-2Dtri0.pdf"><img src="fig-2Dtri0.png" alt="fig-2Dtri0.png" /></a>
+</p>
+</div>
+
+<p>
+If some quads differ in depth from neighboring quads by at most 1, then we say the tree is balanced at a depth of level 1.  This balance level is frequently
+considered as a requirement for quadtrees used as computational meshes.  For meshes intended for visual use, the level may safely be made much higher.
+</p>
+
+
+<div id="org94c08c8" class="figure">
+<p><a href="fig-2Dtri1.pdf"><img src="fig-2Dtri1.png" alt="fig-2Dtri1.png" /></a>
+</p>
+</div>
+
+<p>
+Higher balance levels are frequently used for quadtrees used to represent surfaces in visualization pipelines.  The groups of triangles emanating from the center
+are frequently called "fans" in this case.  Here is a level 3 example:
+</p>
+
+
+<div id="org235b849" class="figure">
+<p><a href="fig-2Dtri3.pdf"><img src="fig-2Dtri3.png" alt="fig-2Dtri3.png" /></a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bd881f" class="outline-2">
+<h2 id="org9bd881f"><span class="section-number-2">2.</span> Software interface</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-text">MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  MORE TO COME.  
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+</div>
+</body>
+</html>

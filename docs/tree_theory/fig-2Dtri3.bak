@@ -1,0 +1,119 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\begin{document}
+
+\noindent
+\begin{tikzpicture}[x=0.5cm,y=0.5cm,text centered]
+  \draw[step=1,black!10,very thin] (0.0,0.0) grid (32.0,32.0);
+  \foreach \x in {00,01,02,03,04,05,06,07,08,09,...,32} {
+    \node (\x) at (\x,-0.5) [red,below]  {$\x$};
+  }
+  \foreach \y in {00,01,02,03,04,05,06,07,08,09,...,32} {
+    \node (\y) at (32.5,\y) [red,right]  {$\y$};
+  }
+
+  \draw[thick] (0,0) rectangle (16,16);
+  \draw[thick] (0,16) rectangle (16,32); 
+  \draw[thick] (16,0) rectangle (32,16);
+
+  \draw[thick] (24,16) rectangle (32,24);
+  \draw[thick] (16,24) rectangle (24,32);
+  \draw[thick] (24,24) rectangle (32,32);
+
+  \draw[thick] (16,16) rectangle (20,20);
+  \draw[thick] (20,20) rectangle (24,24);
+  \draw[thick] (16,20) rectangle (20,24);
+
+  \draw[thick] (16,16) rectangle (18,18);
+  \draw[thick] (18,16) rectangle (20,18);
+  \draw[thick] (16,18) rectangle (18,20);
+  \draw[thick] (18,18) rectangle (20,20);
+
+  \draw[gray] (8,8) -- (0,0);
+  \draw[gray] (8,8) -- (16,0);
+  \draw[gray] (8,8) -- (16,16);
+  \draw[gray] (8,8) -- (0,16);
+
+  \draw[gray] (8,24) -- (0,16);
+  \draw[gray] (8,24) -- (16,16);
+  \draw[gray] (8,24) -- (16,32);
+  \draw[gray] (8,24) -- (0,32);
+
+  \draw[gray] (24,24) -- (16,16);
+  \draw[gray] (24,24) -- (32,16);
+  \draw[gray] (24,24) -- (32,32);
+  \draw[gray] (24,24) -- (16,32);
+
+  \draw[gray] (24,8) -- (16,0);
+  \draw[gray] (24,8) -- (32,0);
+  \draw[gray] (24,8) -- (32,16);
+  \draw[gray] (24,8) -- (16,16);
+
+
+  \fill (16,16) circle(2pt);
+  \fill (20,20) circle(2pt);
+  \fill (24,24) circle(2pt);
+
+  \fill (0,0) circle(2pt);
+  \fill (0,16) circle(2pt);
+  \fill (0,32) circle(2pt);
+
+  \fill (16,0) circle(2pt);
+  \fill (16,16) circle(2pt);
+  \fill (16,32) circle(2pt);
+
+  \fill (32,0) circle(2pt);
+  \fill (32,16) circle(2pt);
+  \fill (32,32) circle(2pt);
+
+  \fill (8,8) circle(2pt);
+  \fill (8,24) circle(2pt);
+
+  \fill (24,8) circle(2pt);
+  \fill (24,24) circle(2pt);
+
+  \fill (16,16) circle(2pt);
+  \fill (16,24) circle(2pt);
+  \fill (16,32) circle(2pt);
+
+  \fill (24,16) circle(2pt);
+  \fill (24,24) circle(2pt);
+  \fill (24,32) circle(2pt);
+
+  \fill (32,16) circle(2pt);
+  \fill (32,24) circle(2pt);
+  \fill (32,32) circle(2pt);
+
+  \fill (20,20) circle(2pt);
+  \fill (20,28) circle(2pt);
+
+  \fill (28,20) circle(2pt);
+  \fill (28,28) circle(2pt);
+
+  \fill (16,16) circle(2pt);
+  \fill (16,20) circle(2pt);
+  \fill (16,24) circle(2pt);
+
+  \fill (20,16) circle(2pt);
+  \fill (20,20) circle(2pt);
+  \fill (20,24) circle(2pt);
+
+  \fill (24,16) circle(2pt);
+  \fill (24,20) circle(2pt);
+  \fill (24,24) circle(2pt);
+
+  \fill (18,18) circle(2pt);
+  \fill (18,22) circle(2pt);
+
+  \fill (22,18) circle(2pt);
+  \fill (22,22) circle(2pt);
+
+  \fill (17,17) circle(2pt);
+  \fill (17,19) circle(2pt);
+  \fill (19,17) circle(2pt);
+  \fill (19,19) circle(2pt);
+
+
+\end{tikzpicture}
+
+\end{document}

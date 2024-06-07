@@ -1,0 +1,23 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\begin{document}
+
+\noindent
+\begin{tikzpicture}[x=0.5cm,y=0.5cm,text centered]
+  \node[align=center] {16\\$[0, 1]$}
+    child {node[align=center] {08\\$[0, \frac{1}{2}]$}}
+    child {node[align=center] {24\\$[\frac{1}{2}, 1]$}
+      child {node[align=center] {20\\$[\frac{1}{2}, \frac{3}{4}]$}
+        child {node[align=center] {18\\$[\frac{1}{2}, \frac{5}{8}]$}}
+        child {node[align=center] {22\\$[\frac{5}{8}, \frac{3}{4}]$}
+          child {node[align=center] {21\\$[\frac{5}{8}, \frac{11}{16}]$}}
+          child {node[align=center] {23\\$[\frac{11}{16}, \frac{3}{4}]$}}
+        }
+      }
+      child {node[align=center] {28\\$[\frac{3}{4}, 1]$}}
+    };
+\end{tikzpicture}
+
+\end{document}
+
+
