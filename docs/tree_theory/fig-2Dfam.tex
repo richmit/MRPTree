@@ -1,0 +1,143 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\begin{document}
+
+\noindent
+\begin{tikzpicture}[x=0.5cm,y=0.5cm,text centered]
+  \draw[step=1,black!10,very thin] (0.0,0.0) grid (32.0,32.0);
+  \foreach \x in {00,01,02,03,04,05,06,07,08,09,...,32} {
+    \node (\x) at (\x,-0.5) [red,below]  {$\x$};
+  }
+  \foreach \y in {00,01,02,03,04,05,06,07,08,09,...,32} {
+    \node (\y) at (32.5,\y) [red,right]  {$\y$};
+  }
+
+  \draw[thick] (0,0) rectangle (16,16);
+  \fill (8,8) circle(2pt);
+  \node (0808) at (8,8) [black,below]  {(08,08)};
+  \draw[thick] (0,16) rectangle (16,32); 
+  \fill (8,24) circle(2pt);  
+  \node (0824) at (8,24) [black,below]  {(08,24)};
+  \draw[thick] (16,0) rectangle (32,16);
+  \fill (24,8) circle(2pt);  
+  \node (2408) at (24,8) [black,below]  {(24,08)};
+
+  \draw[thick] (24,16) rectangle (32,24);
+  \fill (28,20) circle(2pt);  
+  \node (2820) at (28,20) [black,below]  {(28,20)};
+  \draw[thick] (16,24) rectangle (24,32);
+  \fill (20,28) circle(2pt);  
+  \node (2028) at (20,28) [black,below]  {(20,28)};
+  \draw[thick] (24,24) rectangle (32,32);
+  \fill (28,28) circle(2pt);  
+  \node (2828) at (28,28) [black,below]  {(28,28)};
+
+  \draw[thick] (16,16) rectangle (20,20);
+  \fill (18,18) circle(2pt);  
+  \node (1818) at (18,18) [black,below]  {(18,18)};
+  \draw[thick] (20,20) rectangle (24,24);
+  \fill (22,22) circle(2pt);  
+  \node (2222) at (22,22) [black,below]  {(22,22)};
+  \draw[thick] (16,20) rectangle (20,24);
+  \fill (18,22) circle(2pt);  
+  \node (1822) at (18,22) [black,below]  {(18,22)};
+
+  \draw[thick] (20,16) rectangle (22,18);
+  \fill (21,17) circle(2pt);  
+  \node (2117) at (21,17) [black,below,font=\tiny]  {(21,17)};
+  \draw[thick] (22,16) rectangle (24,18);
+  \fill (23,17) circle(2pt);  
+  \node (2317) at (23,17) [black,below,font=\tiny]  {(23,17)};
+  \draw[thick] (20,18) rectangle (22,20);
+  \fill (21,19) circle(2pt);  
+  \node (2119) at (21,19) [black,below,font=\tiny]  {(21,19)};
+  \draw[thick] (22,18) rectangle (24,20);
+  \fill (23,19) circle(2pt);  
+  \node (2319) at (23,19) [black,below,font=\tiny]  {(23,19)};
+
+  \draw (16,16) circle(2pt);
+  \node (16,16) at (16,16) [blue,below left]  {(16,16)};
+  \draw (20,20) circle(2pt);
+  \node (2020) at (20,20) [blue,below left]  {(20,20)};
+  \draw (22,18) circle(2pt);
+  \node (2218) at (22,18) [blue,below right,font=\tiny]  {(22,18)};
+  \draw (24,24) circle(2pt);
+  \node (2424) at (24,24) [blue,above right]  {(24,24)};
+
+  \node (b000000) at (33.5,  0) [red,right] {\tt 000000}; 
+  \node (b000001) at (33.5,  1) [red,right] {\tt 000001}; 
+  \node (b000010) at (33.5,  2) [red,right] {\tt 000010}; 
+  \node (b000011) at (33.5,  3) [red,right] {\tt 000011}; 
+  \node (b000100) at (33.5,  4) [red,right] {\tt 000100}; 
+  \node (b000101) at (33.5,  5) [red,right] {\tt 000101}; 
+  \node (b000110) at (33.5,  6) [red,right] {\tt 000110}; 
+  \node (b000111) at (33.5,  7) [red,right] {\tt 000111}; 
+  \node (b001000) at (33.5,  8) [red,right] {\tt 001000}; 
+  \node (b001001) at (33.5,  9) [red,right] {\tt 001001}; 
+  \node (b001010) at (33.5, 10) [red,right] {\tt 001010}; 
+  \node (b001011) at (33.5, 11) [red,right] {\tt 001011}; 
+  \node (b001100) at (33.5, 12) [red,right] {\tt 001100}; 
+  \node (b001101) at (33.5, 13) [red,right] {\tt 001101}; 
+  \node (b001110) at (33.5, 14) [red,right] {\tt 001110}; 
+  \node (b001111) at (33.5, 15) [red,right] {\tt 001111}; 
+  \node (b010000) at (33.5, 16) [red,right] {\tt 010000}; 
+  \node (b010001) at (33.5, 17) [red,right] {\tt 010001}; 
+  \node (b010010) at (33.5, 18) [red,right] {\tt 010010}; 
+  \node (b010011) at (33.5, 19) [red,right] {\tt 010011}; 
+  \node (b010100) at (33.5, 20) [red,right] {\tt 010100}; 
+  \node (b010101) at (33.5, 21) [red,right] {\tt 010101}; 
+  \node (b010110) at (33.5, 22) [red,right] {\tt 010110}; 
+  \node (b010111) at (33.5, 23) [red,right] {\tt 010111}; 
+  \node (b011000) at (33.5, 24) [red,right] {\tt 011000}; 
+  \node (b011001) at (33.5, 25) [red,right] {\tt 011001}; 
+  \node (b011010) at (33.5, 26) [red,right] {\tt 011010}; 
+  \node (b011011) at (33.5, 27) [red,right] {\tt 011011}; 
+  \node (b011100) at (33.5, 28) [red,right] {\tt 011100}; 
+  \node (b011101) at (33.5, 29) [red,right] {\tt 011101}; 
+  \node (b011110) at (33.5, 30) [red,right] {\tt 011110}; 
+  \node (b011111) at (33.5, 31) [red,right] {\tt 011111}; 
+  \node (b100000) at (33.5, 32) [red,right] {\tt 100000}; 
+
+  \node (ctxl)    at (35.75, 33) [red,right] {\tt ctx}; 
+  \node (c000000) at (36.2,  0) [red,right] {-}; 
+  \node (c000001) at (36.2,  1) [red,right] {\tt 0}; 
+  \node (c000010) at (36.2,  2) [red,right] {\tt 1}; 
+  \node (c000011) at (36.2,  3) [red,right] {\tt 0}; 
+  \node (c000100) at (36.2,  4) [red,right] {\tt 2}; 
+  \node (c000101) at (36.2,  5) [red,right] {\tt 0}; 
+  \node (c000110) at (36.2,  6) [red,right] {\tt 1}; 
+  \node (c000111) at (36.2,  7) [red,right] {\tt 0}; 
+  \node (c001000) at (36.2,  8) [red,right] {\tt 3}; 
+  \node (c001001) at (36.2,  9) [red,right] {\tt 0}; 
+  \node (c001010) at (36.2, 10) [red,right] {\tt 1}; 
+  \node (c001011) at (36.2, 11) [red,right] {\tt 0}; 
+  \node (c001100) at (36.2, 12) [red,right] {\tt 2}; 
+  \node (c001101) at (36.2, 13) [red,right] {\tt 0}; 
+  \node (c001110) at (36.2, 14) [red,right] {\tt 1}; 
+  \node (c001111) at (36.2, 15) [red,right] {\tt 0}; 
+  \node (c010000) at (36.2, 16) [red,right] {\tt 4}; 
+  \node (c010001) at (36.2, 17) [red,right] {\tt 0}; 
+  \node (c010010) at (36.2, 18) [red,right] {\tt 1}; 
+  \node (c010011) at (36.2, 19) [red,right] {\tt 0}; 
+  \node (c010100) at (36.2, 20) [red,right] {\tt 2}; 
+  \node (c010101) at (36.2, 21) [red,right] {\tt 0}; 
+  \node (c010110) at (36.2, 22) [red,right] {\tt 1}; 
+  \node (c010111) at (36.2, 23) [red,right] {\tt 0}; 
+  \node (c011000) at (36.2, 24) [red,right] {\tt 3}; 
+  \node (c011001) at (36.2, 25) [red,right] {\tt 0}; 
+  \node (c011010) at (36.2, 26) [red,right] {\tt 1}; 
+  \node (c011011) at (36.2, 27) [red,right] {\tt 0}; 
+  \node (c011100) at (36.2, 28) [red,right] {\tt 2}; 
+  \node (c011101) at (36.2, 29) [red,right] {\tt 0}; 
+  \node (c011110) at (36.2, 30) [red,right] {\tt 1}; 
+  \node (c011111) at (36.2, 31) [red,right] {\tt 0}; 
+  \node (c100000) at (36.2, 32) [red,right] {-}; 
+
+\end{tikzpicture}
+
+\end{document}
+
+
+x & (~x + 1)
+
+x & (~x + 1)

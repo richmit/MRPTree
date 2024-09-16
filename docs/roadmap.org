@@ -1,0 +1,115 @@
+# -*- Mode:Org; Coding:utf-8; fill-column:158 -*-
+# ######################################################################################################################################################.H.S.##
+# FILE:        roadmap.org
+#+TITLE:       Development Roadmap
+#+AUTHOR:      Mitch Richling
+#+EMAIL:       http://www.mitchr.me/
+#+DATE:        2024-07-16
+#+DESCRIPTION: Project Development Plans
+#+KEYWORDS:    MRPTree
+#+LANGUAGE:    en
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
+#+PROPERTY: header-args :eval never-export
+#+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+#+HTML_HEAD: <style>body { min-width: 500px; max-width: 1024px; }</style>
+#+HTML_HEAD: <style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+#+HTML_HEAD: <style>h1,h2,h3 { line-height: 1.4em; }</style>
+#+HTML_HEAD: <style>h1.title { font-size: 3em; }</style>
+#+HTML_HEAD: <style>.subtitle { font-size: 0.6em; }</style>
+#+HTML_HEAD: <style>h4,h5,h6 { font-size: 1em; }</style>
+#+HTML_HEAD: <style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 62%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+#+HTML_HEAD: <style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 60%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+#+HTML_HEAD: <style>blockquote { margin-bottom: 0.5em; padding: 0.5em; background-color: #FFF8DC; border-left: 2px solid #A5573E; border-left-color: rgb(255, 228, 102); display: block; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 5em; margin-inline-end: 5em; } </style>
+#+HTML_LINK_HOME: https://www.mitchr.me/
+#+HTML_LINK_UP: https://github.com/richmit/MRPTree/
+# ######################################################################################################################################################.H.E.##
+
+#+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
+|          <r> | <l>                                          |
+|    *Author:* | /{{{author}}}/                               |
+|   *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
+| *Generated:* | /{{{time(%Y-%m-%d %H:%M:%S)}}}/              |
+#+ATTR_HTML: :align center
+Copyright \copy {{{time(%Y)}}} Mitch Richling. All rights reserved.
+
+#+TOC: headlines 5
+
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#   010  #    020  #    030  #    040  #    050  #    060  #    070  #    080  #    090  #    100  #    110  #    120  #    130  #    140  #    150  #    160  #    170  #    180  #    190  #    200  #    210  #    220  #    230  #    240  #    250  #    260  #    270  #    280  #    290  #
+# 345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #       | #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #       | #         #         #         #         #         #         #         #         #         #         #         #         #         #
+
+* High Level Future Development Plans (TODO)
+
+     - Example Updates
+       - Add Paraview state for vector_field_3d
+       - Add Paraview state & data for surface_plot_step
+       - Add Paraview state & data for trefoil
+     - Tree Related
+       - Adaptive function sample rules (for bitree & quadtree)
+         - cell angle
+         - cell aspect ratio
+         - cell width
+     - Tree To Complex Related
+       - Adapters & interfaces for cell complex edge solvers (*WIP*)
+       - Cull cells containing domain point
+       - Add meta data to cell point data
+       - Step discontinuity solver
+     - Cell Complex
+       - Edge Solvers
+         - SDF (*WIP*)
+         - Level (*WIP*)
+       - Cell Manipulation
+         - Point Refine
+           - Add a single point
+           - Identify cell "containing" point -- driven by a cell predicate function
+           - Use function to produce point data for new point
+           - Refine cell into new cells containing point as a vertex (work for segments & triangles)
+       - Cell Complex Operations
+         - Add cells from another cell complex
+         - Extract level complex with sample function and store in another cell complex
+           - Demonstrate edge solver & SDF to extract level curve with a large grid step size
+     - Function Examples
+       - Demonstrate how to insert multiple trees into one cell complex (and glue them together?)
+       - Demonstrate cutting on a domain point for bitree example -- step discontinuity.
+     - External Interfaces (listed in no particular order)
+       - Julia
+       - Maple
+       - /Consider/ Ruby
+       - /Consider/ Paraview -- this could be cool, but also very complex.
+       - /Consider/ Fortran (Might just do MR_rect_tree)
+       - /Consider/ Octave/Matlab
+       - /Consider/ Python
+     - /Consider/ Additional file export
+       - /Consider/ direct POV-Ray
+       - /Consider/ direct VTK image/voxel (rectilinear grid)
+     - /Consider/ more MRaster integration
+       - /Consider/ image generation 
+       - /Consider/ image output
+
+* Raw TODO Comments From Source Code
+
+#+begin_src sh :results output verbatum :exports results 
+date; grep -n 'MJR TODO NOTE' ../lib/*.hpp ../examples/*.cpp ../utests/*.cpp ../ftests/*.cpp | sed -E 's/^...//; s/pp:([0-9]+): +\/\/ +MJR TODO NOTE +/pp%\1%/;' | column -s% -t
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Tue Sep 10 13:54:43 CDT 2024
+lib/MR_cell_cplx.hpp  643   <2024-07-22T15:48:31-0500> vec3_det3: UNTESTED! UNTESTED! UNTESTED! UNTESTED!
+lib/MR_cell_cplx.hpp  686   <2024-08-02T09:41:48-0500> geomi_seg_isect_type: Repeated point look-up slows things down
+lib/MR_cell_cplx.hpp  687   <2024-08-02T09:41:48-0500> geomi_seg_isect_type: Add unit tests for each code branch
+lib/MR_cell_cplx.hpp  804   <2024-08-02T09:42:19-0500> geomr_pnt_line_distance: check logic -- dp1>segd || dp2>segd?
+lib/MR_cell_cplx.hpp  834   <2024-07-22T15:48:31-0500> geomr_pnt_tri_distance: UNTESTED! UNTESTED! UNTESTED! UNTESTED! UNTESTED!
+lib/MR_cell_cplx.hpp  904   <2024-07-11T16:08:16-0500> geomr_seg_tri_intersection: implement
+lib/MR_cell_cplx.hpp  905   <2024-07-11T16:08:27-0500> geomr_seg_tri_intersection: Should this be a bool or an enum?
+lib/MR_cell_cplx.hpp  942   <2024-07-11T16:06:42-0500> cell_kind_to_structure: make sure polygons are all oriented correctly
+lib/MR_cell_cplx.hpp  1196  <2024-08-02T09:42:38-0500> check_cell_face_intersections: Implement
+lib/MR_rect_tree.hpp  641   <2024-07-11T11:50:36-0500> cuc_two_cross: If diti is close to an corner, some result points may be out of range.
+lib/MR_rect_tree.hpp  1355  <2024-07-11T16:04:10-0500> cell_is_unbalanced: Optimize run time (nix the use of get_smallest_neighbor_level)
+#+end_example
