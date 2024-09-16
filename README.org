@@ -1,14 +1,3 @@
-
-#+BEGIN_QUOTE
-*WARNING* *WARNING* *WARNING* 
-
-This is alpha software!
-
-About 80% of planned functionality is implemented and the API has stabilized; however, the documentation and unit test coverage is pretty spotty.
-
-*WARNING* *WARNING* *WARNING* 
-#+END_QUOTE
-
 * =MRPTree= (MR 2^P Tree)
 
 =MRPTree= is C++ library implementing a data structure that is a generalization of the quadtree/octree concept to any dimension.
@@ -20,16 +9,15 @@ You can read more about the way the data structure works here: [[https://richmit
 
 Documentation for the library may be found here: [[https://www.mitchr.me/SS/MRPtree/doc-lib/autodocs/html/index.html][MRPTree API Documentation]]
 
-* Repository Contents
+* Learn More
 
  - [[https://richmit.github.io/MRPTree/QuickStart.html][Quick Start Guide]]
  - [[https://richmit.github.io/MRPTree/tree_theory/trees.html][Documentation about how data structure works]]
- - The =MRPTree= itself (See: [[https://github.com/richmit/MRPTree/blob/main/lib/MR_rect_tree.hpp][lib/MR_rect_tree.hpp]])
- - A few examples (See: [[https://github.com/richmit/MRPTree/blob/main/examples][examples/]])
-
-* More Sophisticated Examples
-
-More sophisticated examples may be found in the repo for MRCellCplx3D.
+ - [[https://github.com/richmit/MRPTree/blob/main/examples][Simple examples]]
+ - [[https://github.com/richmit/MRCellCplx3D][More complex examples]]
+ - Doxygen documentation
+   - [[https://www.mitchr.me/SS/MRPTree/doc-examples/autodocs/html/index.html][Examples]]
+   - [[https://www.mitchr.me/SS/MRPTree/doc-lib/autodocs/html/index.html][Library]]
 
 * Build & Test Notes
 

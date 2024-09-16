@@ -28,6 +28,15 @@
   DAMAGE.
   @endparblock
  @filedetails   
+
+  This program writes a simple tabular file containing the tree's data -- one sample per line with space separated coordinates and values.  These
+  may be interrupted as points in 3D, and graphed by tools like GNU Plot.  On Windows running MSYS2, the following command sequence will produce a
+  graph on the screen:
+
+     make hello_world_adaptive
+     ./hello_world_adaptive.exe
+     gnuplot.exe ../examples/hello_world_adaptive.gp
+
 */
 /*******************************************************************************************************************************************************.H.E.**/
 /** @cond exj */

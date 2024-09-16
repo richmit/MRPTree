@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-09-16 Mon 15:44 -->
+<!-- 2024-09-16 Mon 16:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=1024, initial-scale=1" />
 <title>MRPTree Quick Start</title>
@@ -231,144 +231,64 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#build">1. Building <b><code>MRPtree</code></b></a></li>
-<li><a href="#qs-min">2. Quick Start (The absolute minimum for people who hate cmake)</a></li>
+<li><a href="#intro">1. <b><code>MRPtree</code></b> Quick Start</a></li>
+<li><a href="#build-wcmake">2. Building <b><code>MRPtree</code></b> Examples With <code>CMake</code></a></li>
+<li><a href="#build-wocmake">3. Building <b><code>MRPtree</code></b> Examples Without <code>CMake</code></a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-build" class="outline-2">
-<h2 id="build"><span class="section-number-2">1.</span> Building <b><code>MRPtree</code></b></h2>
-<div class="outline-text-2" id="text-build">
-<ol class="org-ol">
-<li>The first step is to download <b><code>MRPtree</code></b>.  Simply clone the repository with GIT like this:</li>
-<li>Change directory to the root of the git <b><code>MRPtree</code></b> repository (you should see "<code>lib</code>" &amp; "<code>examples</code>" directories).</li>
-<li>Create a "<code>build</code>" directory &#x2013; cmake builds outside of the source trees.</li>
-<li>Change directory to the build directory</li>
-<li>Use <code>cmake</code> to generate make files for your system</li>
-<li>Build the examples</li>
-<li>Play with the examples</li>
-</ol>
-
+<div id="outline-container-intro" class="outline-2">
+<h2 id="intro"><span class="section-number-2">1.</span> <b><code>MRPtree</code></b> Quick Start</h2>
+<div class="outline-text-2" id="text-intro">
 <p>
-A typical shell session following the steps outlined above might look like this:
+While <b><code>MRPtree</code></b> comes with some examples, they are <i>very</i> basic &#x2013; perfect for the quadtree/octree expert just wanting to know how to get up and running.
+For more sophisticated examples illustrating how to make use of quadtree/octree-type data structures, see the examples in the
+<a href="https://github.com/richmit/MRCellCplx3D"><b><code>MRCellCplx3D</code></b></a> library.
+</p>
+</div>
+</div>
+
+<div id="outline-container-build-wcmake" class="outline-2">
+<h2 id="build-wcmake"><span class="section-number-2">2.</span> Building <b><code>MRPtree</code></b> Examples With <code>CMake</code></h2>
+<div class="outline-text-2" id="text-build-wcmake">
+<p>
+A typical shell session to build the examples might look like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git clone <span style="color: #fa8072;">'https://github.com/richmit/MRPTree.git'</span>      <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">First clone the repo</span>
-<span style="color: #b0c4de;">cd</span> MRPTree                                              <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Change directory into the repo</span>
-rm -rf build                                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Remove any existing build directy</span>
-mkdir build                                             <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Create a new build directy</span>
-<span style="color: #b0c4de;">cd</span> build                                                <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Chaned directory into the build directory</span>
-cmake -G <span style="color: #fa8072;">'MSYS Makefiles'</span> ..                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Configure build (in this example for Windows running MSYS2)</span>
-cmake --build . -t examples                             <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Build the examples</span>
-./hello_world.exe                                       <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Run the example (leave off the ".exe" on Linux/MacOS</span>
+<pre class="src src-sh">git clone <span style="color: #fa8072;">'https://github.com/richmit/MRPTree.git'</span> <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">First clone the repo</span>
+<span style="color: #b0c4de;">cd</span> MRPTree                                         <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Change directory into the repo</span>
+rm -rf build                                       <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Remove any existing build directy</span>
+mkdir build                                        <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Create a new build directy</span>
+<span style="color: #b0c4de;">cd</span> build                                           <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Chaned directory into the build directory</span>
+cmake -G <span style="color: #fa8072;">'MSYS Makefiles'</span> ..                       <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Configure build (in this example for Windows running MSYS2)</span>
+cmake --build . -t examples                        <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Build the examples</span>
+./hello_world.exe                                  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Run the example (leave off the ".exe" on Linux/MacOS</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-build-wocmake" class="outline-2">
+<h2 id="build-wocmake"><span class="section-number-2">3.</span> Building <b><code>MRPtree</code></b> Examples Without <code>CMake</code></h2>
+<div class="outline-text-2" id="text-build-wocmake">
 <p>
-Note <code>cmake</code> can take several options like the "<code>-G</code>" option mentioned in the example above.  For more information on options related to <b><code>MRPtree</code></b>, take a look
-at the "<code>configure.sh</code>" script in the root directory of the git repository.  Here is the 'help' printed from that script:
+If you really don't want to use <code>cmake</code>, then this will get you started:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">../configure.sh -h
+<pre class="src src-sh">git clone <span style="color: #fa8072;">'https://github.com/richmit/MRPTree.git'</span>                                  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">First clone the repo</span>
+<span style="color: #b0c4de;">cd</span> MRPTree                                                                          <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Change directory into the repo</span>
+rm -rf build                                                                        <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Remove any existing build directy</span>
+mkdir build                                                                         <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Create a new build directy</span>
+<span style="color: #b0c4de;">cd</span> build                                                                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Chaned directory into the build directory</span>
+cmake -G <span style="color: #fa8072;">'MSYS Makefiles'</span> ..                                                        <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Configure build (in this example for Windows running MSYS2)</span>
+g++ -m64 -std=gnu++23 -I ../lib hello_world_regular.cpp -o hello_world_regular.exe  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Build an example</span>
+./hello_world_regular.exe                                                           <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Run the example</span>
+gnuplot ../examples/hello_world_regular.gp                                          <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Plot the output with GNUplot</span>
 </pre>
 </div>
-
-<pre class="example" id="org4246d16">
-
-Run this script from the 'build' directory.
-
-If you don't have a 'build' directory yet, then create one!
-
-Use: configure.sh [configure options] [cmake arguments]
-
-  Configure Options
-   - -C Clean the build directory before running cmake (asks for conformation)
-   - -F Clean the build directory before running cmake (no conformation)
-
-  Common Cmake Arguments:
-   - Target -- leave it off to get the default
-     - -G 'MSYS Makefiles'           &lt;-- Default on MSYS2
-     - -G 'Visual Studio 17 2022'
-     - -G 'Unix Makefiles'           &lt;-- Default on Linux ('Linux' means 'Not MSYS2')
-     - -G Ninja
-   - Compiler -- leave it off to get the default
-     - -DCMAKE_CXX_COMPILER=clang++
-     - -DCMAKE_CXX_COMPILER=g++      &lt;-- Default for 'MSYS Makefiles'
-     - -DCMAKE_CXX_COMPILER=g++-##   &lt;-- Default for 'Unix Makefiles' if /usr/bin/g++-[0-9][0-9] exists
-                                         in which case the highest numbered version is selected.
-                                         This code base needs at least GCC-14.
-     - -DCMAKE_CXX_COMPILER=g++      &lt;-- Default for 'Unix Makefiles' if /usr/bin/g++-[0-9][0-9] missing
-     -                               &lt;-- Default for 'Visual Studio 17 2022'
-   - Optional features -- leave them off to enable everything
-     - -DO_DOXYGEN=[YES|NO]  -- Doxygen (to build documentation)
-     - -DO_BTEST=[YES|NO]    -- BOOT unit tests (to run unit tests)
-</pre>
-</div>
-</div>
-
-<div id="outline-container-qs-min" class="outline-2">
-<h2 id="qs-min"><span class="section-number-2">2.</span> Quick Start (The absolute minimum for people who hate cmake)</h2>
-<div class="outline-text-2" id="text-qs-min">
-<p>
-If you are interested playing around with <b><code>MRPtree</code></b> as quickly as possible, then this section is for you.
-</p>
-
-<p>
-The first step is to download <b><code>MRPtree</code></b>.  Simply clone the repository with GIT like this:
-</p>
-
-<pre class="example" id="org2ad34e6">
-git clone 'https://github.com/richmit/MRPTree.git'
-</pre>
-
-<p>
-Once you have it downloaded, make note of the "<code>lib</code>" folder within the repository.  This folder contains everything you need to develop with <b><code>MRPtree</code></b>, and you
-can simply put your code right in that directory.  So let's create a file called "<code>hello_world.cpp</code>" right inside the "<code>lib</code>" directory with the following content:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-c++">
-<span style="color: #6495ed;">#include</span> <span style="color: #fa8072;">"MR_rect_tree.hpp"</span>
-
-<span style="color: #00ffff;">typedef</span> <span style="color: #8470ff; font-weight: bold;">mjr</span>::<span style="color: #63b8ff;">tree15b2d1rT</span>            <span style="color: #63b8ff;">tt_t</span>;
-<span style="color: #00ffff;">typedef</span> <span style="color: #8470ff; font-weight: bold;">mjr</span>::<span style="color: #63b8ff;">MRccT5</span>                  <span style="color: #63b8ff;">cc_t</span>;
-<span style="color: #00ffff;">typedef</span> <span style="color: #8470ff; font-weight: bold;">mjr</span>::<span style="color: #63b8ff;">MR_rt_to_cc</span>&lt;<span style="color: #63b8ff;">tt_t</span>, <span style="color: #63b8ff;">cc_t</span>&gt; <span style="color: #63b8ff;">tc_t</span>;
-
-<span style="color: #8470ff; font-weight: bold;">tt_t</span>::<span style="color: #63b8ff;">rrpt_t</span> <span style="color: #00fa9a; font-weight: bold;">damp_cos_wave</span>(<span style="color: #8470ff; font-weight: bold;">tt_t</span>::<span style="color: #63b8ff;">drpt_t</span> <span style="color: #7fffd4;">xvec</span>) {
-  <span style="color: #63b8ff;">double</span> <span style="color: #7fffd4;">x</span> = xvec[0];
-  <span style="color: #63b8ff;">double</span> <span style="color: #7fffd4;">y</span> = xvec[1];
-  <span style="color: #63b8ff;">double</span> <span style="color: #7fffd4;">d</span> = x*x+y*y;
-  <span style="color: #63b8ff;">double</span> <span style="color: #7fffd4;">z</span> = <span style="color: #8470ff; font-weight: bold;">std</span>::exp(-d/4)*<span style="color: #8470ff; font-weight: bold;">std</span>::cos(4*<span style="color: #8470ff; font-weight: bold;">std</span>::sqrt(d));
-  <span style="color: #00ffff;">return</span> z;
-}
-
-<span style="color: #63b8ff;">int</span> <span style="color: #00fa9a; font-weight: bold;">main</span>() {
-  <span style="color: #63b8ff;">tt_t</span> <span style="color: #7fffd4;">tree</span>({-2.1, -2.1},
-            { 2.1,  2.1});
-
-  tree.refine_grid(7, damp_cos_wave);
-  tree.dump_tree(5);
-
-  <span style="color: #ffa500;">// </span><span style="color: #ff7f24;">ccplx.write_xml_vtk("hello_world.vtu", "hello_world");</span>
-}
-</pre>
-</div>
-
-<p>
-Now we can compile it with GCC like this:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">g++ -m64 -std=gnu++23 hello_world.cpp -o hello_world
-</pre>
-</div>
-
-<p>
-Now you can run it, and then load the file it created ("<code>hello_world.vtu</code>") up in something like Paraview.
-</p>
 </div>
 </div>
 </div>

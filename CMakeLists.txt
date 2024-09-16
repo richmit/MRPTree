@@ -55,6 +55,18 @@ else()
 endif()
 
 ######################################################################################################################################################
+# Create interface target for the entire project
+
+set(MRPTREE_INCLUDES "build/mrptree_config.hpp"
+                     "lib/MR_math.hpp"
+                     "lib/MR_rect_tree.hpp")
+add_library(MRPtree INTERFACE ${MRPTREE_INCLUDES})
+target_include_directories(MRPtree INTERFACE 
+                           "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>"
+                           "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/build>"
+                           "$<INSTALL_INTERFACE:include>")
+
+######################################################################################################################################################
 # Create Targets for examples, functional tests, & unit tests
 
 # Master list of targets
@@ -91,9 +103,11 @@ foreach(CURTGT IN LISTS TARGETS)
     continue()
   endif()
 
-  target_include_directories(${CURTGT} PRIVATE lib)
   target_compile_features(${CURTGT} PUBLIC cxx_std_23)
-  target_include_directories(${CURTGT} PRIVATE ${CMAKE_BINARY_DIR})
+
+  #target_include_directories(${CURTGT} PRIVATE lib)
+  #target_include_directories(${CURTGT} PRIVATE ${CMAKE_BINARY_DIR})
+  target_link_libraries(${CURTGT} MRPtree)
 
   # Compiler specific stuff
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -138,7 +152,6 @@ if(Boost_FOUND)
   add_custom_target(run-utests
     DEPENDS ${TARGETS_UTEST}
     COMMENT "Running Unit Tests"
-    #COMMAND "cmake --build . -t test"
     COMMAND "ctest"
   )
 endif()
@@ -190,3 +203,42 @@ if(Doxygen_FOUND)
 else()
   message("Warning: Doxygen not found.  No documentation targets!")
 endif()
+
+######################################################################################################################################################
+# Export the library interface cmake file
+
+export(TARGETS MRPtree FILE "${CMAKE_BINARY_DIR}/MRPtreeLib.cmake")
+
+######################################################################################################################################################
+# Create Package Files
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/MRPtreeConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfig.cmake"
+                              INSTALL_DESTINATION $"{CMAKE_INSTALL_LIBDIR}/cmake/MRPtree")
+
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfigVersion.cmake"
+                                 COMPATIBILITY AnyNewerVersion)
+
+######################################################################################################################################################
+# Install
+#
+# This configuration "installs" all the stuff required to build things with mrptree into the export directory:
+#  - Non-deprecated Header files
+#  - cmake package
+#  - cmake export for library
+
+set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/build/install")
+include(GNUInstallDirs)
+install(FILES ${MRPTREE_INCLUDES} TYPE INCLUDE)
+install(TARGETS MRPtree EXPORT MRPtreeLib)
+
+install(EXPORT MRPtreeLib
+        FILE MRPtreeLib.cmake
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPtree")
+
+install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPtree")

@@ -31,125 +31,49 @@
 
 #+TOC: headlines 5
 
-* Building *=MRPtree=*
+* *=MRPtree=* Quick Start
 :PROPERTIES:
-:CUSTOM_ID: build
+:CUSTOM_ID: intro
 :END:
 
- 1) The first step is to download *=MRPtree=*.  Simply clone the repository with GIT like this:
- 2) Change directory to the root of the git *=MRPtree=* repository (you should see "=lib=" & "=examples=" directories).
- 3) Create a "=build=" directory -- cmake builds outside of the source trees.
- 4) Change directory to the build directory
- 5) Use =cmake= to generate make files for your system
- 6) Build the examples
- 7) Play with the examples
+While *=MRPtree=* comes with some examples, they are /very/ basic -- perfect for the quadtree/octree expert just wanting to know how to get up and running.
+For more sophisticated examples illustrating how to make use of quadtree/octree-type data structures, see the examples in the
+[[https://github.com/richmit/MRCellCplx3D][*=MRCellCplx3D=*]] library.
 
-A typical shell session following the steps outlined above might look like this:
+* Building *=MRPtree=* Examples With =CMake=
+:PROPERTIES:
+:CUSTOM_ID: build-wcmake
+:END:
+
+A typical shell session to build the examples might look like this:
 
 #+begin_src sh :exports code :eval never
-git clone 'https://github.com/richmit/MRPTree.git'      # First clone the repo
-cd MRPTree                                              # Change directory into the repo
-rm -rf build                                            # Remove any existing build directy
-mkdir build                                             # Create a new build directy
-cd build                                                # Chaned directory into the build directory
-cmake -G 'MSYS Makefiles' ..                            # Configure build (in this example for Windows running MSYS2)
-cmake --build . -t examples                             # Build the examples
-./hello_world.exe                                       # Run the example (leave off the ".exe" on Linux/MacOS
+git clone 'https://github.com/richmit/MRPTree.git' # First clone the repo
+cd MRPTree                                         # Change directory into the repo
+rm -rf build                                       # Remove any existing build directy
+mkdir build                                        # Create a new build directy
+cd build                                           # Chaned directory into the build directory
+cmake -G 'MSYS Makefiles' ..                       # Configure build (in this example for Windows running MSYS2)
+cmake --build . -t examples                        # Build the examples
+./hello_world.exe                                  # Run the example (leave off the ".exe" on Linux/MacOS
 #+end_src
 
-Note =cmake= can take several options like the "=-G=" option mentioned in the example above.  For more information on options related to *=MRPtree=*, take a look
-at the "=configure.sh=" script in the root directory of the git repository.  Here is the 'help' printed from that script:
-
-#+begin_src sh :results output verbatum :exports both 
-../configure.sh -h
-#+end_src
-
-#+RESULTS:
-#+begin_example
-
-  Run this script from the 'build' directory.
-
-  If you don't have a 'build' directory yet, then create one!
-
-  Use: configure.sh [configure options] [cmake arguments]
-
-    Configure Options
-     - -C Clean the build directory before running cmake (asks for conformation)
-     - -F Clean the build directory before running cmake (no conformation)
-
-    Common Cmake Arguments:
-     - Target -- leave it off to get the default
-       - -G 'MSYS Makefiles'           <-- Default on MSYS2
-       - -G 'Visual Studio 17 2022'
-       - -G 'Unix Makefiles'           <-- Default on Linux ('Linux' means 'Not MSYS2')
-       - -G Ninja
-     - Compiler -- leave it off to get the default
-       - -DCMAKE_CXX_COMPILER=clang++
-       - -DCMAKE_CXX_COMPILER=g++      <-- Default for 'MSYS Makefiles'
-       - -DCMAKE_CXX_COMPILER=g++-##   <-- Default for 'Unix Makefiles' if /usr/bin/g++-[0-9][0-9] exists
-                                           in which case the highest numbered version is selected.
-                                           This code base needs at least GCC-14.
-       - -DCMAKE_CXX_COMPILER=g++      <-- Default for 'Unix Makefiles' if /usr/bin/g++-[0-9][0-9] missing
-       -                               <-- Default for 'Visual Studio 17 2022'
-     - Optional features -- leave them off to enable everything
-       - -DO_DOXYGEN=[YES|NO]  -- Doxygen (to build documentation)
-       - -DO_BTEST=[YES|NO]    -- BOOT unit tests (to run unit tests)
-#+end_example
-
-* Quick Start (The absolute minimum for people who hate cmake)
+* Building *=MRPtree=* Examples Without =CMake=
 :PROPERTIES:
-:CUSTOM_ID: qs-min
+:CUSTOM_ID: build-wocmake
 :END:
 
-If you are interested playing around with *=MRPtree=* as quickly as possible, then this section is for you.
+If you really don't want to use =cmake=, then this will get you started:
 
-The first step is to download *=MRPtree=*.  Simply clone the repository with GIT like this:
-
-#+BEGIN_EXAMPLE
-git clone 'https://github.com/richmit/MRPTree.git'
-#+END_EXAMPLE
-
-Once you have it downloaded, make note of the "=lib=" folder within the repository.  This folder contains everything you need to develop with *=MRPtree=*, and you
-can simply put your code right in that directory.  So let's create a file called "=hello_world.cpp=" right inside the "=lib=" directory with the following content:
-
-#+begin_src sh :results output verbatum :exports results :wrap "src c++ :eval never :tangle no"
-grep -EA 10000 '(!|#|\*|=|_|-|%|;|C|/){70,}\.H\.E\.' ../examples/hello_world.cpp | grep -vE '(!|#|\*|=|_|-|%|;|C|/){70,}' | grep -vE '@(cond|endcond)'
+#+begin_src sh :exports code :eval never
+git clone 'https://github.com/richmit/MRPTree.git'                                  # First clone the repo
+cd MRPTree                                                                          # Change directory into the repo
+rm -rf build                                                                        # Remove any existing build directy
+mkdir build                                                                         # Create a new build directy
+cd build                                                                            # Chaned directory into the build directory
+cmake -G 'MSYS Makefiles' ..                                                        # Configure build (in this example for Windows running MSYS2)
+g++ -m64 -std=gnu++23 -I ../lib hello_world_regular.cpp -o hello_world_regular.exe  # Build an example
+./hello_world_regular.exe                                                           # Run the example
+gnuplot ../examples/hello_world_regular.gp                                          # Plot the output with GNUplot
 #+end_src
-
-#+RESULTS:
-#+begin_src c++ :eval never :tangle no
-
-#include "MR_rect_tree.hpp"
-
-typedef mjr::tree15b2d1rT            tt_t;
-typedef mjr::MRccT5                  cc_t;
-typedef mjr::MR_rt_to_cc<tt_t, cc_t> tc_t;
-
-tt_t::rrpt_t damp_cos_wave(tt_t::drpt_t xvec) {
-  double x = xvec[0];
-  double y = xvec[1];
-  double d = x*x+y*y;
-  double z = std::exp(-d/4)*std::cos(4*std::sqrt(d));
-  return z;
-}
-
-int main() {
-  tt_t tree({-2.1, -2.1},
-            { 2.1,  2.1});
-
-  tree.refine_grid(7, damp_cos_wave);
-  tree.dump_tree(5);
-
-  // ccplx.write_xml_vtk("hello_world.vtu", "hello_world");
-}
-#+end_src
-
-Now we can compile it with GCC like this:
-
-#+begin_src sh :exports source :eval never
-g++ -m64 -std=gnu++23 hello_world.cpp -o hello_world
-#+end_src
-
-Now you can run it, and then load the file it created ("=hello_world.vtu=") up in something like Paraview.
-
 

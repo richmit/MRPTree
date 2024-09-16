@@ -29,6 +29,16 @@
   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
   DAMAGE.
   @endparblock
+ @filedetails   
+
+  This program writes a simple tabular file containing the tree's data -- one sample per line with space separated coordinates and values.  These
+  may be interrupted as points in 3D, and graphed by tools like GNU Plot.  On Windows running MSYS2, the following command sequence will produce a
+  graph on the screen:
+
+     make hello_world_regular
+     ./hello_world_regular.exe
+     gnuplot.exe ../examples/hello_world_regular.gp
+
 */
 /*******************************************************************************************************************************************************.H.E.**/
 /** @cond exj */
@@ -60,5 +70,3 @@ int main() {
   tree.dump_tree_datafile("hello_world_regular.tab");
 }
 /** @endcond */
-
-// make hello_world_regular && { ./hello_world_regular.exe; gnuplot.exe ../examples/hello_world_regular.gp }
