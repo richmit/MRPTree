@@ -46,51 +46,11 @@ Copyright \copy {{{time(%Y)}}} Mitch Richling. All rights reserved.
 
 * High Level Future Development Plans (TODO)
 
-     - Example Updates
-       - Add Paraview state for vector_field_3d
-       - Add Paraview state & data for surface_plot_step
-       - Add Paraview state & data for trefoil
      - Tree Related
        - Adaptive function sample rules (for bitree & quadtree)
          - cell angle
          - cell aspect ratio
          - cell width
-     - Tree To Complex Related
-       - Adapters & interfaces for cell complex edge solvers (*WIP*)
-       - Cull cells containing domain point
-       - Add meta data to cell point data
-       - Step discontinuity solver
-     - Cell Complex
-       - Edge Solvers
-         - SDF (*WIP*)
-         - Level (*WIP*)
-       - Cell Manipulation
-         - Point Refine
-           - Add a single point
-           - Identify cell "containing" point -- driven by a cell predicate function
-           - Use function to produce point data for new point
-           - Refine cell into new cells containing point as a vertex (work for segments & triangles)
-       - Cell Complex Operations
-         - Add cells from another cell complex
-         - Extract level complex with sample function and store in another cell complex
-           - Demonstrate edge solver & SDF to extract level curve with a large grid step size
-     - Function Examples
-       - Demonstrate how to insert multiple trees into one cell complex (and glue them together?)
-       - Demonstrate cutting on a domain point for bitree example -- step discontinuity.
-     - External Interfaces (listed in no particular order)
-       - Julia
-       - Maple
-       - /Consider/ Ruby
-       - /Consider/ Paraview -- this could be cool, but also very complex.
-       - /Consider/ Fortran (Might just do MR_rect_tree)
-       - /Consider/ Octave/Matlab
-       - /Consider/ Python
-     - /Consider/ Additional file export
-       - /Consider/ direct POV-Ray
-       - /Consider/ direct VTK image/voxel (rectilinear grid)
-     - /Consider/ more MRaster integration
-       - /Consider/ image generation 
-       - /Consider/ image output
 
 * Raw TODO Comments From Source Code
 
@@ -100,16 +60,7 @@ date; grep -n 'MJR TODO NOTE' ../lib/*.hpp ../examples/*.cpp ../utests/*.cpp ../
 
 #+RESULTS:
 #+begin_example
-Tue Sep 10 13:54:43 CDT 2024
-lib/MR_cell_cplx.hpp  643   <2024-07-22T15:48:31-0500> vec3_det3: UNTESTED! UNTESTED! UNTESTED! UNTESTED!
-lib/MR_cell_cplx.hpp  686   <2024-08-02T09:41:48-0500> geomi_seg_isect_type: Repeated point look-up slows things down
-lib/MR_cell_cplx.hpp  687   <2024-08-02T09:41:48-0500> geomi_seg_isect_type: Add unit tests for each code branch
-lib/MR_cell_cplx.hpp  804   <2024-08-02T09:42:19-0500> geomr_pnt_line_distance: check logic -- dp1>segd || dp2>segd?
-lib/MR_cell_cplx.hpp  834   <2024-07-22T15:48:31-0500> geomr_pnt_tri_distance: UNTESTED! UNTESTED! UNTESTED! UNTESTED! UNTESTED!
-lib/MR_cell_cplx.hpp  904   <2024-07-11T16:08:16-0500> geomr_seg_tri_intersection: implement
-lib/MR_cell_cplx.hpp  905   <2024-07-11T16:08:27-0500> geomr_seg_tri_intersection: Should this be a bool or an enum?
-lib/MR_cell_cplx.hpp  942   <2024-07-11T16:06:42-0500> cell_kind_to_structure: make sure polygons are all oriented correctly
-lib/MR_cell_cplx.hpp  1196  <2024-08-02T09:42:38-0500> check_cell_face_intersections: Implement
-lib/MR_rect_tree.hpp  641   <2024-07-11T11:50:36-0500> cuc_two_cross: If diti is close to an corner, some result points may be out of range.
-lib/MR_rect_tree.hpp  1355  <2024-07-11T16:04:10-0500> cell_is_unbalanced: Optimize run time (nix the use of get_smallest_neighbor_level)
+Mon Sep 16 15:45:10 CDT 2024
+lib/MR_rect_tree.hpp  624   <2024-07-11T11:50:36-0500> cuc_two_cross: If diti is close to an corner, some result points may be out of range.
+lib/MR_rect_tree.hpp  1348  <2024-07-11T16:04:10-0500> cell_is_unbalanced: Optimize run time (nix the use of get_smallest_neighbor_level)
 #+end_example
