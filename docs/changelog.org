@@ -68,6 +68,7 @@ Copyright \copy {{{time(%Y)}}} Mitch Richling. All rights reserved.
 :PROPERTIES:
 :CUSTOM_ID: pre-release-changelog
 :END:
+ - 2024-09-17: Proper cmake package & install added
  - 2024-09-16: Refactor to break out MRPTree & MRCellCplx3D
  - 2024-09-10: Build system integration with unit & functional tests
  - 2024-09-09: Refactored removing aspect from tree

@@ -60,8 +60,8 @@ endif()
 set(MRPTREE_INCLUDES "build/mrptree_config.hpp"
                      "lib/MR_math.hpp"
                      "lib/MR_rect_tree.hpp")
-add_library(MRPtree INTERFACE ${MRPTREE_INCLUDES})
-target_include_directories(MRPtree INTERFACE 
+add_library(MRPTree INTERFACE ${MRPTREE_INCLUDES})
+target_include_directories(MRPTree INTERFACE 
                            "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>"
                            "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/build>"
                            "$<INSTALL_INTERFACE:include>")
@@ -107,7 +107,7 @@ foreach(CURTGT IN LISTS TARGETS)
 
   #target_include_directories(${CURTGT} PRIVATE lib)
   #target_include_directories(${CURTGT} PRIVATE ${CMAKE_BINARY_DIR})
-  target_link_libraries(${CURTGT} MRPtree)
+  target_link_libraries(${CURTGT} MRPTree)
 
   # Compiler specific stuff
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -207,18 +207,18 @@ endif()
 ######################################################################################################################################################
 # Export the library interface cmake file
 
-export(TARGETS MRPtree FILE "${CMAKE_BINARY_DIR}/MRPtreeLib.cmake")
+export(TARGETS MRPTree FILE "${CMAKE_BINARY_DIR}/MRPTreeLib.cmake")
 
 ######################################################################################################################################################
 # Create Package Files
 
 include(CMakePackageConfigHelpers)
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/MRPtreeConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfig.cmake"
-                              INSTALL_DESTINATION $"{CMAKE_INSTALL_LIBDIR}/cmake/MRPtree")
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/MRPTreeConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfig.cmake"
+                              INSTALL_DESTINATION $"{CMAKE_INSTALL_LIBDIR}/cmake/MRPTree")
 
-write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfigVersion.cmake"
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfigVersion.cmake"
                                  COMPATIBILITY AnyNewerVersion)
 
 ######################################################################################################################################################
@@ -232,13 +232,13 @@ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfigVersi
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/build/install")
 include(GNUInstallDirs)
 install(FILES ${MRPTREE_INCLUDES} TYPE INCLUDE)
-install(TARGETS MRPtree EXPORT MRPtreeLib)
+install(TARGETS MRPTree EXPORT MRPTreeLib)
 
-install(EXPORT MRPtreeLib
-        FILE MRPtreeLib.cmake
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPtree")
+install(EXPORT MRPTreeLib
+        FILE MRPTreeLib.cmake
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPTree")
 
 install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/MRPtreeConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPtree")
+        "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPTree")
