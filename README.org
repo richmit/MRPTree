@@ -14,7 +14,7 @@ Documentation for the library may be found here: [[https://www.mitchr.me/SS/MRPt
  - [[https://richmit.github.io/MRPTree/QuickStart.html][Quick Start Guide]]
  - [[https://richmit.github.io/MRPTree/tree_theory/trees.html][Documentation about how data structure works]]
  - [[https://github.com/richmit/MRPTree/blob/main/examples][Simple examples]]
- - [[https://github.com/richmit/MRCellCplx3D][More complex examples]]
+ - [[https://richmit.github.io/FuncViz/func-viz/MRPTree-core.html][More complex examples]]
  - Doxygen documentation
    - [[https://www.mitchr.me/SS/MRPTree/doc-examples/autodocs/html/index.html][Examples]]
    - [[https://www.mitchr.me/SS/MRPTree/doc-lib/autodocs/html/index.html][Library]]
