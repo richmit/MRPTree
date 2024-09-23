@@ -59,6 +59,11 @@ Copyright \copy {{{time(%Y)}}} Mitch Richling. All rights reserved.
       - N/A
   - Miscellaneous
     - N/A
+* v0.1.0.0: Alpha Release
+:PROPERTIES:
+:CUSTOM_ID: v0.1.0.0
+:END:
+  - Alpha Release
 * v0.0.0.60: Initial Release                               :noexport:
 :PROPERTIES:
 :CUSTOM_ID: v0.0.0.00

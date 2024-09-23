@@ -4,6 +4,9 @@
 *.aux
 *.log
 
+
+/next-tag.org
+
 /build/
 
 lib/TAGS
