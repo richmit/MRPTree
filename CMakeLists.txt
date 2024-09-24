@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.20.0 FATAL_ERROR)
 # Proejct meta data
 
 project(MRPTree 
-  VERSION 0.2.0.0
+  VERSION 0.5.0.0
   DESCRIPTION "Generalized bitree/quadtree/octree library"
   HOMEPAGE_URL "https://github.com/richmit/MRPTree/"
   LANGUAGES CXX)
