@@ -62,32 +62,46 @@ generalizing the quadtree concept to arbitrary dimensions.  In order to define t
 
 An example is in order. Suppose we wish to sample on the unit interval $[0, 1]$ -- i.e. the real numbers from 0 to 1 inclusive.
 
-[[file:fig-1Dfam-00.pdf][file:fig-1Dfam-00.png]]
+# [[file:fig-1Dfam-00.pdf][file:fig-1Dfam-00.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-00.pdf][file:fig-1Dfam-00.svg]]
 
 Now suppose that we have determined that we don't need any more than 32 intervals (note 32 is a power of 2).  We can enumerate these potential sample
 points with integers like this:
 
-[[file:fig-1Dfam-01.pdf][file:fig-1Dfam-01.png]]
+# [[file:fig-1Dfam-01.pdf][file:fig-1Dfam-01.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-01.pdf][file:fig-1Dfam-01.svg]]
 
 We start a tree with one quad (a line segment in this case) over the entire domain.
 
-[[file:fig-1Dfam-02.pdf][file:fig-1Dfam-02.png]]
+# [[file:fig-1Dfam-02.pdf][file:fig-1Dfam-02.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-02.pdf][file:fig-1Dfam-02.svg]]
 
 Now we refine the right interval:
 
-[[file:fig-1Dfam-03.pdf][file:fig-1Dfam-04.png]]
+# [[file:fig-1Dfam-03.pdf][file:fig-1Dfam-04.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-03.pdf][file:fig-1Dfam-03.svg]]
 
 Now we refine the interval just to the right of the midpoint:
 
-[[file:fig-1Dfam-05.pdf][file:fig-1Dfam-05.png]]
+# [[file:fig-1Dfam-05.pdf][file:fig-1Dfam-05.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-05.pdf][file:fig-1Dfam-05.svg]]
 
 Finally we refine the right side of the interval we just refined:
 
-[[file:fig-1Dfam-06.pdf][file:fig-1Dfam-06.png]]
+# [[file:fig-1Dfam-06.pdf][file:fig-1Dfam-06.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-1Dfam-06.pdf][file:fig-1Dfam-06.svg]]
 
 For reference, this set of nested intervals might be stored in a tree data structure like so:
 
-[[file:fig-1Dfam-07.pdf][file:fig-1Dfam-07.png]]
+# [[file:fig-1Dfam-07.pdf][file:fig-1Dfam-07.png]]
+#+ATTR_HTML: :width 200 :align center
+[[file:fig-1Dfam-07.pdf][file:fig-1Dfam-07.svg]]
 
 Several key observations about our chosen integer coordinate system:
 
@@ -110,9 +124,9 @@ tree the center point is at coordinates $(16,16)$.  So we might pack these two v
 pack multidimensional tuples into native integers, or we can use more sophisticated data structures like C++'s =std::bitset=.  All that matters is that our
 data structure choice is hashable in our language of choice.
 
-
-[[file:fig-2Dfam.pdf][file:fig-2Dfam.png]]
-
+# [[file:fig-2Dfam.pdf][file:fig-2Dfam.png]]
+#+ATTR_HTML: :width 900 :align center
+[[file:fig-2Dfam.pdf][file:fig-2Dfam.svg]]
 
 * Integer Coordinates: Notation & Basic Observations
 :PROPERTIES:
@@ -154,30 +168,44 @@ data structure choice is hashable in our language of choice.
  * $C(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{C}$ -- The set of children of level $L(\vec{\mathbf{c}})-d$.  \\
    $C(\vec{\mathbf{c}}, 0)=\vec{\mathbf{c}}$. \\
    We call $C(\vec{\mathbf{c}}, 1)$ the children, and $C(\vec{\mathbf{c}}, 2)$ the grandchildren.
-#+ATTR_HTML:  :align center
- | [[file:fig-cell-child1.pdf][file:fig-cell-child1.png]] | [[file:fig-cell-child2.pdf][file:fig-cell-child2.png]] |
+
+# [[file:fig-cell-child1.pdf][file:fig-cell-child1.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-child1.pdf][file:fig-cell-child1.svg]] 
+
+# [[file:fig-cell-child2.pdf][file:fig-cell-child2.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-child2.pdf][file:fig-cell-child2.svg]] 
 
  * $N(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{C}$ -- Neighbors of level $L(\vec{\mathbf{c}})-d$.  \\
    In the case $d=0$, this set will be neighbors of the same "size" -- i.e. the $H$ of each neighbor will be $H(\vec{\mathbf{c}})$.
 
-   [[file:fig-cell-nbr02.pdf][file:fig-cell-nbr0.png]]
+   # [[file:fig-cell-nbr0.pdf][file:fig-cell-nbr0.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-nbr0.pdf][file:fig-cell-nbr0.svg]]
 
  * $E(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}$ -- The set of cell endpoints (i.e. the corners of the cell hyper-rectangle)
    $$E(c)= \left\{ c-H(c), c+H(c) \right\} $$
    $$E(\vec{\mathbf{c}})=E(c_1) \times \cdots \times E(c_D)=\prod_{j=1}^{D}E(c_j)$$
 
-   [[file:fig-cell-end.pdf][file:fig-cell-end.png]]
+   # [[file:fig-cell-end.pdf][file:fig-cell-end.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-cell-end.pdf][file:fig-cell-end.svg]]
 
  * $V(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}$ -- The set of vertexes of a cell are the cell's endpoints and the center.
    $$V(\vec{\mathbf{c}}) = E(\vec{\mathbf{c}}) \cup \{\vec{\mathbf{c}}\}$$
 
-   [[file:fig-cell-vert.pdf][file:fig-cell-vert.png]]
+   # [[file:fig-cell-vert.pdf][file:fig-cell-vert.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-cell-vert.pdf][file:fig-cell-vert.svg]]
 
  * $G(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{L}$ -- Grid Points.  The vertexes of $C(\vec{\mathbf{c}}, d)$ \\
    $$G(\vec{\mathbf{c}}, d) = \bigcup_{\vec{\mathbf{c}'}\in C(\vec{\mathbf{c}}, d)} V(\vec{\mathbf{c}'})$  $$
    Note $G(\vec{\mathbf{c}}, 0) = V(\vec{\mathbf{c}})$
 
-   [[file:fig-cell-grid2.pdf][file:fig-cell-grid2.png]]
+   # [[file:fig-cell-grid2.pdf][file:fig-cell-grid2.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-grid2.pdf][file:fig-cell-grid2.svg]]
    
  * $\hat{R}(K) : 2^\mathcal{L} \rightarrow \mathcal{L}$ & $\check{R}(K) : 2^\mathcal{L} \rightarrow \mathcal{L}$ -- Upper, and lower, bounding rectangle coordinates for a set of coordinates $K$ \\
    $$\hat{R}(K)   = [\max_{n\in K}(n_1), \max_{n\in K}(n_2), ..., \max_{n\in K}(n_D)] $$
@@ -188,19 +216,25 @@ data structure choice is hashable in our language of choice.
    $$B(\vec{\mathbf{c}}, d) = \{ \vec{\mathbf{c}'}\in V(\vec{\mathbf{c}}, d)\,\,\vert\,\,\exists i\in\mathbb{Z}_{P+1} \mathrm{with}\, \vec{\mathbf{c}'}_i=\hat{R}_i(K)\, \mathrm{or}\, \vec{\mathbf{c}'}_i=\check{R}_i(K) \}  $$
    Note $B(\vec{\mathbf{c}}, 0) = E(\vec{\mathbf{c}})$
 
-   [[file:fig-cell-bdry2.pdf][file:fig-cell-bdry2.png]]
+   # [[file:fig-cell-bdry2.pdf][file:fig-cell-bdry2.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-bdry2.pdf][file:fig-cell-bdry2.svg]]
 
  * $I(\vec{\mathbf{c}}, d) : \mathcal{C}\times\mathbb{Z}_P \rightarrow 2^\mathcal{L}$ -- Interior Vertexes of $V(\vec{\mathbf{c}})$.
    $$B(\vec{\mathbf{c}}, d) = V(\vec{\mathbf{c}}) \setminus B(\vec{\mathbf{c}}, d) $$
    Note $I(\vec{\mathbf{c}}, 0) = \{\vec{\mathbf{c}}\}$ 
 
-   [[file:fig-cell-int22.pdf][file:fig-cell-int2.png]]
+   # [[file:fig-cell-int2.pdf][file:fig-cell-int2.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-int2.pdf][file:fig-cell-int2.svg]]
 
  * $Q(\vec{\mathbf{c}}) : \mathcal{C} \rightarrow 2^\mathcal{L}$ -- The set of all coordinates (all integer lattice points) contained in the cell
    $$Q(c)=\{ j\in\mathbb{Z}_{P+1} | E_0(c) \le c \le E_1(c) \}$$
    $$Q(\vec{\mathbf{c}})=Q(c_0) \times \cdots \times Q(c_n)=\prod_{j=0}^{n-1}Q(c_j)$$
 
-   [[file:fig-cell-coords.pdf][file:fig-cell-coords.png]]
+   # [[file:fig-cell-coords.pdf][file:fig-cell-coords.png]]
+#+ATTR_HTML: :width 600 :align center
+[[file:fig-cell-coords.pdf][file:fig-cell-coords.svg]]
 
 * Enumerating Integer Coordinate Sets
 :PROPERTIES:
@@ -262,15 +296,21 @@ We triangulate 2D cells such that:
 
 If all quads are the same size, we say the tree is balanced level 0 (i.e. the depth of all neighboring quads are equal).  This situation is illustrated below:
 
-[[file:fig-2Dtri0.pdf][file:fig-2Dtri0.png]]
+# [[file:fig-2Dtri0.pdf][file:fig-2Dtri0.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-2Dtri0.pdf][file:fig-2Dtri0.svg]]
 
 If some quads differ in depth from neighboring quads by at most 1, then we say the tree is balanced at a depth of level 1.  This balance level is frequently
 considered as a requirement for quadtrees used as computational meshes.  For meshes intended for visual use, the level may safely be made much higher.
 
-[[file:fig-2Dtri1.pdf][file:fig-2Dtri1.png]]
+# [[file:fig-2Dtri1.pdf][file:fig-2Dtri1.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-2Dtri1.pdf][file:fig-2Dtri1.svg]]
 
 Higher balance levels are frequently used for quadtrees used to represent surfaces in visualization pipelines.  The groups of triangles emanating from the center
 are frequently called "fans" in this case.  Here is a level 3 example:
 
-[[file:fig-2Dtri3.pdf][file:fig-2Dtri3.png]]
+# [[file:fig-2Dtri3.pdf][file:fig-2Dtri3.png]]
+#+ATTR_HTML: :width 800 :align center
+[[file:fig-2Dtri3.pdf][file:fig-2Dtri3.svg]]
 
