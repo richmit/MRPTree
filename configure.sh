@@ -30,6 +30,27 @@
 #########################################################################################################################################################.H.E.##
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
+if [ ! -e ../CMakeLists.txt ]; then
+  echo "ERROR(configure.sh): Missing ../CMakeLists.txt"
+  if [ -e ./CMakeLists.txt ]; then
+    echo "ERROR(configure.sh): It looks like you are running from the base of the repo"
+    if [ -d ./build ]; then
+      echo "ERROR(configure.sh): cd into the build directory to run this script"
+    else
+      echo "ERROR(configure.sh): Create a 'bulid' directory and run this script in it"
+    fi
+  fi
+  echo ''
+  echo "ERROR(configure.sh): Use the -h option for help"
+  exit
+fi
+
+OPATHS=('MRaster'     \
+        'MRPTree'     \
+        'MRMathCPP'   \
+       );
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
 if [[ "${@}" == *'-h'* ]]; then
   cat <<EOF
 
@@ -57,10 +78,24 @@ if [[ "${@}" == *'-h'* ]]; then
                                            This code base needs at least GCC-14.
        - -DCMAKE_CXX_COMPILER=g++      <-- Default for 'Unix Makefiles' if /usr/bin/g++-[0-9][0-9] missing
        -                               <-- Default for 'Visual Studio 17 2022'
-     - Optional features -- leave them off to enable everything
-       - -DO_DOXYGEN=[YES|NO]  -- Doxygen (to build documentation)
-       - -DO_BTEST=[YES|NO]    -- BOOT unit tests (to run unit tests)
 EOF
+
+  if grep -q '^OPTION(O_' ../CMakeLists.txt; then
+     echo '     - Optional features'
+     sed -En 's/^[#O]PTION\(O_([A-Z0-9_]+)( +)"([^"]+)".*(ON|OFF).*$/       - -DO_\1=[ON|OFF] \2 \3 (Default: \4)/p' < ../CMakeLists.txt
+  fi
+
+  OPH='     - Search Paths For MR* Components'
+  for opath in "${OPATHS[@]}"; do
+    if grep -q "${opath}_PATH" ../CMakeLists.txt; then
+      if [ -n "$OPH" ]; then
+        echo "$OPH"
+      fi
+      OPH=''
+      echo "       - -D${opath}_PATH=<PATH>"
+    fi
+  done
+
 exit
 fi
 
@@ -78,7 +113,6 @@ else
 fi
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
-if [ -e ../CMakeLists.txt ]; then
   if [ "$(basename $(pwd))" == "build" ]; then
     #
     # If we need to clean, then CLEAN!!
@@ -89,6 +123,7 @@ if [ -e ../CMakeLists.txt ]; then
       else
         rm -rf *
       fi
+      echo 'This is the build directory.  You should run CMake inside this directory to build project targets.' >> README.md
     fi
     #
     # Figure out target
@@ -103,7 +138,7 @@ if [ -e ../CMakeLists.txt ]; then
       fi
     done
     if [ "$CMAKE_TARGET" == 'LOOKING' ]; then
-      echo "ERROR: Found -G but no following target argument"
+      echo "ERROR(configure.sh): Found -G but no following target argument"
     fi
     # No -G, figure out default!
     if [ -z "$CMAKE_TARGET" ]; then
@@ -154,18 +189,7 @@ if [ -e ../CMakeLists.txt ]; then
       fi
     fi
   else
-    echo "ERROR: Must run from build directory"
+    echo "ERROR(configure.sh): Must run from build directory"
   fi
-else
-  if [ -e ./CMakeLists.txt ]; then
-    echo "ERROR: It looks like you are running from the base of the repo"
-    if [ -d ./build ]; then
-      echo "ERROR: cd into the build directory to run this script"
-    else
-      echo "ERROR: Create a directory called 'bulid'."
-      echo "ERROR: cd into the build directory to run this script"
-    fi
-  else
-    echo "ERROR: Missing ../CMakeLists.txt"
-  fi
-fi
+
+

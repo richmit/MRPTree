@@ -1,6 +1,6 @@
 ######################################################################################################################################################
 ######################################################################################################################################################
-cmake_minimum_required(VERSION 3.20.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.30.0 FATAL_ERROR)
 
 ######################################################################################################################################################
 # Proejct meta data
@@ -14,18 +14,15 @@ project(MRPTree
 set(MRPTREE_VERSION_DATE  2024-09-16)
 mark_as_advanced(MRPTREE_VERSION_DATE)
 
-string(TIMESTAMP MRPTREE_CONFIG_DATE "%Y-%m-%d")
-mark_as_advanced(MRPTREE_CONFIG_DATE)
-
 ######################################################################################################################################################
-# Include ctest -- we might not use it if boost is not found...
+# Include ctest
 include(CTest) 
 
 ######################################################################################################################################################
-# Here are the options we use to modify the build -- these options are passed to cmake like so: cmake -DO_BTEST=YES or -DO_BTEST=NO
+# Here are the options we use to modify the build -- these options are passed to cmake like so: cmake -DO_GTEST=YES or -DO_GTEST=NO
 
-OPTION(O_DOXYGEN "Include support for doxygen"         ON )
-OPTION(O_BTEST   "Include support for boost.test"      ON )
+OPTION(O_DOXYGEN "Include support for doxygen"            ON )
+OPTION(O_GTEST   "Include support for Google Test"        ON )
 
 ######################################################################################################################################################
 # Find tools & libraries used to build targets
@@ -42,29 +39,55 @@ else()
   set(MRPTREE_OPT_DOXYGEN "0")
 endif()
 
-if(O_BTEST)
-  set(MRPTREE_OPT_BTEST "1")
-  find_package(Boost COMPONENTS unit_test_framework)
-  if(Boost_FOUND)
-    set(MRPTREE_FOUND_BTEST "1")
-  else()
-    set(MRPTREE_FOUND_BTEST "0")
-  endif()
-else()
-  set(MRPTREE_OPT_BTEST "0")
+if(O_GTEST)
+  find_package(GTest)
 endif()
+
+find_file(MRMathCPP_PATH "MRMathCPPLib.cmake" PATHS "MRMathCPP/build"  "../MRMathCPP/build")
+if(NOT MRMathCPP_PATH STREQUAL "MRMathCPP_PATH-NOTFOUND")
+  message(STATUS "Found MRMathCPP: ${MRMathCPP_PATH}")
+  include("${MRMathCPP_PATH}")
+else()
+  message(FATAL_ERROR " MRMathCPP Search Failed!\n"
+                      "     The MRMathCPP repository must be located in the same directory as this one, and\n"
+                      "     must be configured -- i.e. a generated MRMathCPPLib.cmake file must exist in the.\n"
+                      "     build directory.\n")
+endif()
+get_target_property(MRMathCPP_INCLUDE MRMathCPP INTERFACE_INCLUDE_DIRECTORIES)
 
 ######################################################################################################################################################
 # Create interface target for the entire project
 
-set(MRPTREE_INCLUDES "build/mrptree_config.hpp"
-                     "lib/MR_math.hpp"
-                     "lib/MR_rect_tree.hpp")
+set(MRPTREE_INCLUDES "lib/MR_rect_tree.hpp")
 add_library(MRPTree INTERFACE ${MRPTREE_INCLUDES})
-target_include_directories(MRPTree INTERFACE 
-                           "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>"
-                           "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/build>"
-                           "$<INSTALL_INTERFACE:include>")
+target_include_directories(MRPTree INTERFACE ${MRMathCPP_INCLUDE})
+target_include_directories(MRPTree INTERFACE "${PROJECT_SOURCE_DIR}/lib")
+
+######################################################################################################################################################
+# Export the library interface cmake file
+export(TARGETS MRPTree FILE "${CMAKE_BINARY_DIR}/MRPTreeLib.cmake")
+
+######################################################################################################################################################
+# Create variable for project includes
+get_target_property(MRPTree_INCLUDE MRPTree INTERFACE_INCLUDE_DIRECTORIES)
+message(STATUS "Combined Project Includes: ${MRPTree_INCLUDE}")
+
+######################################################################################################################################################
+# Add targets for documentation
+
+if(Doxygen_FOUND)
+  foreach(DOXINPUT IN ITEMS "lib" "examples")
+    message(STATUS "Generateing doxygen target for ${DOXINPUT}")
+    CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Doxyfile.cmake ${CMAKE_BINARY_DIR}/doc-${DOXINPUT}/Doxyfile)
+    add_custom_target(doc-${DOXINPUT}
+      COMMAND ${DOXYGEN_EXECUTABLE} > dox.out
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/doc-${DOXINPUT}
+      COMMENT "Generating ${DOXINPUT} documentation with Doxygen"
+      VERBATIM)
+  endforeach(DOXINPUT)
+else()
+  message(STATUS "Warning: Doxygen not found.  No documentation targets!")
+endif()
 
 ######################################################################################################################################################
 # Create Targets for examples, functional tests, & unit tests
@@ -76,11 +99,9 @@ set(TARGETS "hello_world_adaptive"
             "tree_basics_7b1" "tree_basics_7b2" "tree_basics_7b3" "tree_basics_7b4" "tree_basics_7b5"
             "tree_basics_15b1" "tree_basics_15b3"
             "tree_corners"
-            "tree_children" "tree_neighbors" "zzz_tbd_tree_exist_neighbors"
+            "tree_children" "tree_neighbors"
             ### Functional Tests
             # None yet
-            ### Config
-            "mrptree_config"
            )
 
 # Add a target for each one we can build
@@ -92,8 +113,8 @@ foreach(CURTGT IN LISTS TARGETS)
     add_executable(${CURTGT} EXCLUDE_FROM_ALL "ftests/${CURTGT}.cpp")
     list(APPEND TARGETS_FTEST ${CURTGT})
   elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/utests/${CURTGT}.cpp")
-    if(NOT Boost_FOUND)
-      message(NOTICE "Target ${CURTGT} will not be built (no boost support)")
+    if(NOT GTest_FOUND)
+      message(NOTICE "Target ${CURTGT} will not be built (no GTest support)")
       continue()
     endif()
     add_executable(${CURTGT} EXCLUDE_FROM_ALL "utests/${CURTGT}.cpp")
@@ -104,10 +125,9 @@ foreach(CURTGT IN LISTS TARGETS)
   endif()
 
   target_compile_features(${CURTGT} PUBLIC cxx_std_23)
-
-  #target_include_directories(${CURTGT} PRIVATE lib)
-  #target_include_directories(${CURTGT} PRIVATE ${CMAKE_BINARY_DIR})
-  target_link_libraries(${CURTGT} MRPTree)
+  target_link_libraries(${CURTGT} PRIVATE MRPTree)
+  # target_include_directories(${CURTGT} PRIVATE "${MRMathCPP_INCLUDE}")
+  # target_include_directories(${CURTGT} PRIVATE "${MRPtree_INCLUDE}")
 
   # Compiler specific stuff
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -125,7 +145,7 @@ foreach(CURTGT IN LISTS TARGETS)
 
   # Unit Test Specific Stuff
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/utests/${CURTGT}.cpp")
-    target_link_libraries(${CURTGT} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+    target_link_libraries(${CURTGT} PRIVATE GTest::gtest_main)
     add_test(NAME "${CURTGT}" COMMAND "${CURTGT}")
   endif()
 
@@ -144,7 +164,7 @@ add_custom_target(run-ftests
   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/ftests/run_tests.sh"
 )
 
-if(Boost_FOUND)
+if(GTest_FOUND)
   add_custom_target(utests
     DEPENDS ${TARGETS_UTEST}
     COMMENT "Building Unit Tests"
@@ -182,63 +202,4 @@ if(EXISTS "c:/Users/richmit/Documents/WWW/site/SS/MRPTree/doc-examples/")
   )
 endif()
 
-######################################################################################################################################################
-# Generate an include file with various methdata about the build.
 
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mrptree_config.hpp.cmake ${CMAKE_BINARY_DIR}/mrptree_config.hpp)
-
-######################################################################################################################################################
-
-# Add targets for documentation
-if(Doxygen_FOUND)
-  foreach(DOXINPUT IN ITEMS "lib" "examples")
-    message(STATUS "Generateing doxygen target for ${DOXINPUT}")
-    CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Doxyfile.cmake ${CMAKE_BINARY_DIR}/doc-${DOXINPUT}/Doxyfile)
-    add_custom_target(doc-${DOXINPUT}
-      COMMAND ${DOXYGEN_EXECUTABLE} > dox.out
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/doc-${DOXINPUT}
-      COMMENT "Generating ${DOXINPUT} documentation with Doxygen"
-      VERBATIM)
-  endforeach(DOXINPUT)
-else()
-  message("Warning: Doxygen not found.  No documentation targets!")
-endif()
-
-######################################################################################################################################################
-# Export the library interface cmake file
-
-export(TARGETS MRPTree FILE "${CMAKE_BINARY_DIR}/MRPTreeLib.cmake")
-
-######################################################################################################################################################
-# Create Package Files
-
-include(CMakePackageConfigHelpers)
-
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/MRPTreeConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfig.cmake"
-                              INSTALL_DESTINATION $"{CMAKE_INSTALL_LIBDIR}/cmake/MRPTree")
-
-write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfigVersion.cmake"
-                                 COMPATIBILITY AnyNewerVersion)
-
-######################################################################################################################################################
-# Install
-#
-# This configuration "installs" all the stuff required to build things with mrptree into the export directory:
-#  - Non-deprecated Header files
-#  - cmake package
-#  - cmake export for library
-
-set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/build/install")
-include(GNUInstallDirs)
-install(FILES ${MRPTREE_INCLUDES} TYPE INCLUDE)
-install(TARGETS MRPTree EXPORT MRPTreeLib)
-
-install(EXPORT MRPTreeLib
-        FILE MRPTreeLib.cmake
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPTree")
-
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/MRPTreeConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/MRPTree")

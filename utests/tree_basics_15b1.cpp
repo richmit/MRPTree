@@ -30,54 +30,45 @@
 */
 /*******************************************************************************************************************************************************.H.E.**/
 
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE Main
-#include <boost/test/unit_test.hpp>
-
-#define BOOST_TEST_DYN_LINK
-#ifdef STAND_ALONE
-#   define BOOST_TEST_MODULE Main
-#endif
-#include <boost/test/unit_test.hpp>
-
+#include <gtest/gtest.h>
 #include "MR_rect_tree.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOST_AUTO_TEST_CASE(tree_basics_15b1) {
+TEST(tree_basics_15b1, NA) {
 
   mjr::tree15b1d1rT tree(-1.0, 1.0);
 
-  BOOST_TEST_CHECK(tree.ccc_get_top_cell()                     == 0x4000 );
-  BOOST_TEST_CHECK(tree.ccc_cell_level(0x4000)                 == 0      );
+  EXPECT_EQ(tree.ccc_get_top_cell(),     0x4000 );
+  EXPECT_EQ(tree.ccc_cell_level(0x4000), 0      );
 
-  BOOST_TEST_CHECK(tree.ccc_cell_quarter_width(0x4000)         == 0x2000 ); 
-  BOOST_TEST_CHECK(tree.ccc_cell_half_width(0x4000)            == 0x4000 ); 
-  BOOST_TEST_CHECK(tree.ccc_cell_full_width(0x4000)            == 0x8000 ); 
+  EXPECT_EQ(tree.ccc_cell_quarter_width(0x4000), 0x2000 ); 
+  EXPECT_EQ(tree.ccc_cell_half_width(0x4000),    0x4000 ); 
+  EXPECT_EQ(tree.ccc_cell_full_width(0x4000),    0x8000 ); 
 
-  BOOST_TEST_CHECK(tree.ccc_cell_get_corner_min(0x4000)        == 0x0000 );
-  BOOST_TEST_CHECK(tree.ccc_cell_get_corner_max(0x4000)        == 0x8000 );
+  EXPECT_EQ(tree.ccc_cell_get_corner_min(0x4000), 0x0000 );
+  EXPECT_EQ(tree.ccc_cell_get_corner_max(0x4000), 0x8000 );
 
   for(int i=0; i<1; i++) {
-    BOOST_TEST_CHECK(tree.dom_at(tree.diti_to_drpt(0x4000), i) ==  0.0,       boost::test_tools::tolerance(0.00001) );
-    BOOST_TEST_CHECK(tree.dom_at(tree.diti_to_drpt(0x2000), i) == -0.5,       boost::test_tools::tolerance(0.00001) );
-    BOOST_TEST_CHECK(tree.dom_at(tree.diti_to_drpt(0x0000), i) == -1.0,       boost::test_tools::tolerance(0.00001) );  
-    BOOST_TEST_CHECK(tree.dom_at(tree.diti_to_drpt(0x8000), i) ==  1.0,       boost::test_tools::tolerance(0.00001) );  
+    EXPECT_NEAR(tree.dom_at(tree.diti_to_drpt(0x4000), i),  0.0,       0.00001);
+    EXPECT_NEAR(tree.dom_at(tree.diti_to_drpt(0x2000), i), -0.5,       0.00001);
+    EXPECT_NEAR(tree.dom_at(tree.diti_to_drpt(0x0000), i), -1.0,       0.00001);  
+    EXPECT_NEAR(tree.dom_at(tree.diti_to_drpt(0x8000), i),  1.0,       0.00001);  
 
-    BOOST_TEST_CHECK(tree.dom_at(tree.get_bbox_min(), i)       == -1.0,       boost::test_tools::tolerance(0.00001) );
-    BOOST_TEST_CHECK(tree.dom_at(tree.get_bbox_max(), i)       ==  1.0,       boost::test_tools::tolerance(0.00001) );
-    BOOST_TEST_CHECK(tree.dom_at(tree.get_bbox_delta(), i)     ==  1.0/16384, boost::test_tools::tolerance(0.00001) );
+    EXPECT_NEAR(tree.dom_at(tree.get_bbox_min(), i),  -1.0,       0.00001);
+    EXPECT_NEAR(tree.dom_at(tree.get_bbox_max(), i),   1.0,       0.00001);
+    EXPECT_NEAR(tree.dom_at(tree.get_bbox_delta(), i), 1.0/16384, 0.00001);
   }
 
-  BOOST_TEST_CHECK(tree.dom_at(tree.diti_to_drpt(0x2000), 0)   == -0.5,       boost::test_tools::tolerance(0.00001) );
+  EXPECT_NEAR(tree.dom_at(tree.diti_to_drpt(0x2000), 0), -0.5,       0.00001);
 
-  BOOST_TEST_CHECK(tree.cuc_get_crd(0xABCD, 0)                 == 0xABCD );
+  EXPECT_EQ(tree.cuc_get_crd(0xABCD, 0),       0xABCD );
 
-  BOOST_TEST_CHECK(tree.cuc_inc_crd(0xAAA1, 0, 0x1)            == 0xAAA2 );
-  BOOST_TEST_CHECK(tree.cuc_dec_crd(0xAAA1, 0, 0x1)            == 0xAAA0 );
+  EXPECT_EQ(tree.cuc_inc_crd(0xAAA1, 0, 0x1),  0xAAA2 );
+  EXPECT_EQ(tree.cuc_dec_crd(0xAAA1, 0, 0x1),  0xAAA0 );
 
-  BOOST_TEST_CHECK(tree.cuc_dec_all_crd(0xAAA1, 0x1)           == 0xAAA0 );
-  BOOST_TEST_CHECK(tree.cuc_inc_all_crd(0xAAA1, 0x1)           == 0xAAA2 );
+  EXPECT_EQ(tree.cuc_dec_all_crd(0xAAA1, 0x1), 0xAAA0 );
+  EXPECT_EQ(tree.cuc_inc_all_crd(0xAAA1, 0x1), 0xAAA2 );
 
-  BOOST_TEST_CHECK(tree.cuc_set_all_crd(0xAAA1)                == 0xAAA1 );
+  EXPECT_EQ(tree.cuc_set_all_crd(0xAAA1),      0xAAA1 );
 
 }

@@ -62,7 +62,7 @@
 #include <vector>                                                        /* STL vector              C++11    */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "MR_math.hpp"                                                   /* My Simple Math Utilities          */
+#include "MRMathCPP.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Put everything in the mjr namespace
@@ -1249,11 +1249,11 @@ namespace mjr {
            (\exists \vec{\mathbf{v_1}},\vec{\mathbf{v_2}}\in E(\vec{\mathbf{c}})\,\mathrm{st}\,\mathrm{sgn}(\vec{\mathbf{v1}})\ne\mathrm{sgn}(\vec{\mathbf{v2}}))
            @f]
         */
-        int center_sign = mjr::math::sgn(sdf(diti_to_drpt(cell)));
+        int center_sign = mjr::math::sfun::sgn(sdf(diti_to_drpt(cell)));
         if (center_sign == 0)
           return true;
         for(diti_t& v: ccc_get_corners(cell))
-          if (center_sign != mjr::math::sgn(sdf(diti_to_drpt(v))))
+          if (center_sign != mjr::math::sfun::sgn(sdf(diti_to_drpt(v))))
             return true;
         return false;
       }
@@ -1311,11 +1311,11 @@ namespace mjr {
           @param range_level The level, or value, of the range component we are testing
           @return true if the cell crosses the range level. */
       inline bool cell_cross_range_level(diti_t cell, int range_index, src_t range_level) {
-        int center_sign = mjr::math::sgn(rng_at(samples[cell], range_index)-range_level);
+        int center_sign = mjr::math::sfun::sgn(rng_at(samples[cell], range_index)-range_level);
         if (center_sign == 0)
           return true;
         for(diti_t& v: ccc_get_corners(cell))
-          if (center_sign != mjr::math::sgn(rng_at(samples[v], range_index)-range_level))
+          if (center_sign != mjr::math::sfun::sgn(rng_at(samples[v], range_index)-range_level))
             return true;
         return false;
       }
