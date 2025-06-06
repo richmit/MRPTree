@@ -1,0 +1,11 @@
+
+This directory contains minimal examples for:
+  - *MRPTree* (=MR_rect_tree.hpp=) in =lib/=
+  - The cell/bridge example libraries (=MR_cell_cplx.hpp= & =MR_rt_to_cc.hpp=) in =examples-lib3d/=.
+  - The *MRaster* library (if it was configured by =cmake=).
+
+--------------------
+
+Have fun!!
+
+-mitch

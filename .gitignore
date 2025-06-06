@@ -1,0 +1,17 @@
+*~
+#*
+.#*
+
+*.aux
+*.log
+
+README.html
+
+/next-tag.org
+
+/TAGS
+/TAGS.old
+/TAGS.old.old
+
+/build/*
+

@@ -1,0 +1,14 @@
+
+This directory examples that apply *MRPTree* to the problem of
+mathematical function visualization.  You can read more about
+these examples [[https://www.mitchr.me/SS/MRPTree/func-viz/index.html][here]].
+
+This is an area I'm personally interested in, and it provides a good
+source of visually interesting examples that make pretty full use of
+*MRPTree*'s capabilities.
+
+--------------------
+
+Have fun!!
+
+-mitch

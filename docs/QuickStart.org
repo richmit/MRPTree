@@ -1,0 +1,140 @@
+# -*- Mode:Org; Coding:utf-8; fill-column:158 -*-
+# ######################################################################################################################################################.H.S.##
+# FILE:        QuickStart.org
+#+TITLE:       MRPTree Quick Start & FAQ
+#+AUTHOR:      Mitch Richling
+#+EMAIL:       http://www.mitchr.me/
+#+DATE:        2024-08-20
+#+DESCRIPTION: Minimal tutorial for getting started with MRPTree
+#+KEYWORDS:    KEYWORDS FIXME
+#+LANGUAGE:    en
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
+#+PROPERTY: header-args :eval never-export
+#+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+#+HTML_HEAD: <style>body { min-width: 500px; max-width: 1024px; }</style>
+#+HTML_HEAD: <style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+#+HTML_HEAD: <style>h1,h2,h3 { line-height: 1.4em; }</style>
+#+HTML_HEAD: <style>h1.title { font-size: 3em; }</style>
+#+HTML_HEAD: <style>.subtitle { font-size: 0.6em; }</style>
+#+HTML_HEAD: <style>h4,h5,h6 { font-size: 1em; }</style>
+#+HTML_HEAD: <style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+#+HTML_HEAD: <style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+#+HTML_LINK_HOME: https://www.mitchr.me/
+#+HTML_LINK_UP: https://github.com/richmit/MRPTree/
+# ######################################################################################################################################################.H.E.##
+
+#+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
+| Copyright \copy {{{time(%Y)}}} Mitch Richling. All rights reserved. |
+
+#+TOC: headlines 5
+
+* *=MRPtree=* Quick Start
+:PROPERTIES:
+:CUSTOM_ID: intro
+:END:
+
+The best place to start with *=MRPtree=* is the example programs.  
+
+** Building *=MRPtree=* Examples With =CMake=
+:PROPERTIES:
+:CUSTOM_ID: build-wcmake
+:END:
+
+The *=MRPtree=* code is broken into *two* repositories (*=MRPtree=* & *=MRMathCPP=*), and both must be downloaded and configured before you can use
+*=MRPtree=*.  In addition, some of the example programs use *=MRaster=*.  If you want to build those examples, then you will also need to download and
+configure *=MRaster=*.
+
+A typical shell session to download, configure everything, and build the examples might look like this:
+
+#+begin_src sh :exports code :eval never
+git clone 'https://github.com/richmit/MRMathCPP.git'    # Download MRMathCPP
+cd MRMathCPP/build                                      # Change directory to 'build'
+cmake ..                                                # Configure the build system with cmake
+cd ../..                                                # Change directory back to where we started
+git clone 'https://github.com/richmit/mraster.git'      # Download MRaster
+cd mraster/build                                        # Change directory to 'build'
+cmake ..                                                # Configure the build system with cmake
+cd ../..                                                # Change directory back to where we started
+git clone 'https://github.com/richmit/MRPTree.git'      # Download MRPTree
+cd MRPTree/build                                        # Change directory into the repo's build directory
+cmake ..                                                # Configure build
+cmake --build . -t examples-all                         # Build all the examples
+#+end_src
+
+
+** Building *=MRPtree=* Examples Without =CMake=
+:PROPERTIES:
+:CUSTOM_ID: build-wocmake
+:END:
+
+*=MRPtree=* and all of it's dependencies are single-header C++ libraries.  So using them really just amounts to making sure your compiler
+an find the headers.  
+
+Our first step is to get the code.  A typical shell session to download everything might look like this:
+
+#+begin_src sh :exports code :eval never
+git clone 'https://github.com/richmit/MRMathCPP.git'    # Download MRMathCPP
+git clone 'https://github.com/richmit/mraster.git'      # Download MRaster
+git clone 'https://github.com/richmit/MRPTree.git'      # Download MRPTree
+#+end_src
+
+Here is a brief outline of what we have downloaded:
+ - =MRMathCPP/lib/=            :: Headers for =MRMathCPP=
+ - =mraster/lib=               :: Headers for =MRaster=
+ - =MRPTree/lib/=              :: Headers for =MRPTree=
+ - =MRPTree/examples-lib3d/=   :: Headers for =MRPTree= examples
+ - =MRPTree/examples-func-viz= :: The most interesting =MRPTree= example programs
+
+What you do next will depend upon your development environment.  For example, if we are using GCC on a UNIX-like environment, then we might do something like
+this:
+
+#+begin_src sh :exports code :eval never
+cd MRPTree/examples-func-viz
+g++ -std=c++23 -I../lib/ -I../../MRMathCPP/lib/ -I../examples-lib3d/ -I../../mraster/lib/ -o complex_magnitude_surface complex_magnitude_surface.cpp
+#+end_src
+
+This will build =complex_magnitude_surface= on UNIX'ish platforms and =complex_magnitude_surface.exe= on windows (under MSYS2 for example).  Of the several
+examples, I selected =complex_magnitude_surface.cpp= as it uses all of the dependencies, including =MRaster= -- so it's a good test if we got everything
+right.
+
+If using an IDE, then the standard procedure is to create a project and simply add the source file for the example in question along with all the headers to
+the project.
+
+* *=MRPtree=* FAQ 
+:PROPERTIES:
+:CUSTOM_ID: faq
+:END:
+
+** All of the examples are about functions visualization.  Is =MRPTree= appropriate for other applications? :noexport:
+
+Sure.  
+
+I mostly use it for mathematical visualization because I'm a mathematician.  Other people use =MRPTree= for all sorts of things.  The most common use cases, based
+on communication with =MRPTree= users, seem to be:
+ - Image processing
+ - Artificial terrain modeling & generation
+ - Physics simulations (frequently in high dimensional spaces)
+ - 3D volume modeling & rendering (mostly from medical imaging)
+
+** Do I /need/ =MRaster= to use =MRPTree=.
+
+No.  I use =MRaster= in some of the example programs to generate color schemes or bitmaps.  =MRPTree= has no direct dependency on this library at all.
+
+** Do I /need/ =MRMathCPP= to use =MRPTree=.
+
+Yes.  =MRPTree= directly uses several of the functions in  =MRMathCPP=.
+
+** Do you recommend using the =MR_cell_cplx= or =MR_rt_to_cc= outside of the provided examples?
+
+No.
+
+These libraries are quite minimal -- they really are just barely enough to support useful examples. Any real application using =MRPTree= would be much better
+served using something like VTK for 3D geometry.
+
+These libraries are housed in a directory called "=examples-lib3d=" to emphasize the point they are *NOT* part of the primary library.
+
+
+

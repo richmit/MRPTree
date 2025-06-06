@@ -1,0 +1,61 @@
+* =MRPTree= (MR 2^P Tree)
+
+\(2^P\mathrm{-trees}\) are a data structure generalizing the quadtree/octree concept to any dimension, and =MRPTree= is a C++
+library implementing this data structure.
+ - This single data structure is capable of representing quadtree-like structures in any dimension -- with no code modifications. 
+ - The resulting code is both less complex and easier to use than traditional tree based data structures.
+ - Many tree operations are transformed into simple integer manipulation, and thus are much faster than tree operations.
+ - Lower dimensional /slices/ of =MRPTree= objects may viewed, =copy= & =move= free, as lower dimensional =MRPTree= objects.
+
+You can read more about the [[https://www.mitchr.me/SS/MRPTree/tree_theory/index.html][theory behind the data structure]], and
+peruse the [[https://www.mitchr.me/SS/MRPTree/doc-lib/autodocs/html/index.html][API documentation]].
+
+My primary motivation for this data structure was applications in mathematical visualization.  These problems naturally involve
+the simultaneous modeling of objects in different dimensions and migration of data between models of differing dimension.
+Consider an an implicit surface given as the zero set of a function in $\mathbb{R}^3$.  For this problem we might use an octree
+to sample values within a 3D volume so that we can isolate the surface.  We might then use a quadtree to represent the extracted
+surface.  Lastly we might use a bitree to represent level curves on that surface.  This library allows us to do all of that with
+a single data structure instead of three.
+
+* Getting Started
+
+The [[https://richmit.github.io/MRPTree/QuickStart.html][Quick Start Guide]] is probably the best place to start.
+
+Given my focus it should be no surprise that [[https://www.mitchr.me/SS/MRPTree/func-viz/index.html][most of the examples]]
+shipped with =MRPTree= involve function visualization.  In order to make these examples self contained and visually interesting,
+I have included a couple of very simple "helper" libraries.  The first (=MR_cell_cplx=) manages 3D geometric data and second
+(=MR_rt_to_cc=) helps construct this geometric data from =MRPTree= objects.  Note these two libraries are quite minimal -- they
+really are just barely enough to support useful examples. Any real application using =MRPTree= would be much better served with
+something like VTK.
+
+Example Documentation:
+ - [[https://www.mitchr.me/SS/MRPTree/func-viz/index.html][A tour through the function visualization examples]]
+ - [[https://www.mitchr.me/SS/MRPTree/doc-examples-func-viz/autodocs/html/index.html][Doxygen generated documentation for function visualization examples]]
+ - [[https://www.mitchr.me/SS/MRPTree/doc-examples-lib3d/autodocs/html/index.html][Doxygen generated documentation for =MR_cell_cplx= & =MR_rt_to_cc=]]
+ - [[https://www.mitchr.me/SS/MRPTree/doc-examples/autodocs/html/index.html][Doxygen generated documentation for minimal, hello_world, examples]]
+
+* Build & Test Notes
+
+ - MSYS2 on Windows 11:
+   - g++: (Rev3, Built by MSYS2 project) 14.1.0
+   - clang: 18.1.6
+   - cmake: 3.29.5
+   - boost: 1.85.0-2 (For unit tests)
+ - Debian 12.6
+   - g++: (Debian 14-20240330-1) 14.0.1 20240330 (experimental) [master r14-9728-g6fc84f680d0]
+   - cmake: 3.25.1
+   - boost: 1.83
+ - Windows 11
+   - Microsoft Visual Studio Community 2022 Version 17.10.5
+   - cmake: 3.29.5
+   - boost: I haven't tried to integrate with boost yet!
+
+* Progress Updates
+
+Please see the [[https://richmit.github.io/MRPTree/changelog.html][Changelog]].
+
+--------------------
+
+Have fun!!
+
+-mitch

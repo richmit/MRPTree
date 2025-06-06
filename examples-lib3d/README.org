@@ -1,0 +1,9 @@
+
+This directory contains minimal examples that demonstrate the most
+basic *MRPTree* functionality.
+
+--------------------
+
+Have fun!!
+
+-mitch
