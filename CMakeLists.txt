@@ -122,19 +122,22 @@ message(STATUS "Combined Project Includes: ${MRPTree_INCLUDE}")
 ######################################################################################################################################################
 # Create Targets for examples, functional tests, & unit tests
 
-# CODE GEN: echo 'set(TARGETS_REQ_CELL '$(basename -s.cpp $(grep -El '#include "(MR_cell_cplx.hpp|MR_rt_to_cc.hpp)"' */*.cpp))')'
+# CODE GEN: echo 'set(TARGETS_REQ_MRMATHCPP '$(basename -s.cpp $(grep -El '#include "(MRMath[A-Z]+\.hpp)"' */*.cpp || echo '""'))')'
+set(TARGETS_REQ_MRMATHCPP "")
+
+# CODE GEN: echo 'set(TARGETS_REQ_CELL '$(basename -s.cpp $(grep -El '#include "(MR_cell_cplx.hpp|MR_rt_to_cc.hpp)"' */*.cpp || echo '""'))')'
 set(TARGETS_REQ_CELL hello_world_cell hello_world_mraster recipe-surf-plot-adapt recipe-surf-plot-norm recipe-surf-plot-rs-quad recipe-surf-plot-rs-tri complex_magnitude_surface curve_plot ear_surface ear_surface_glue holy_wave_surf implicit_curve_2d implicit_surface parametric_curve_3d parametric_surface_with_defects performance_with_large_surface surface_branch_glue surface_plot_annular_edge surface_plot_corner surface_plot_edge surface_plot_step surface_with_normals trefoil vector_field_3d flat_test_tree_01 nan_solver rect_fix_dup rect_fix_nan segment_folder triangle_folder check_cell_hexahedron check_cell_pyramid check_cell_quad check_cell_segment check_cell_triangle geomi_pnt_line_distance geomi_seg_isect_type geomr_pnt_line_distance geomr_pnt_pln_distance geomr_pnt_tri_distance)
 
-# CODE GEN: echo 'set(TARGETS_REQ_BRIDGE '$(basename -s.cpp $(grep -El '#include "(ramCanvas.hpp|MRcolor.hpp)"' */*.cpp))')'
+# CODE GEN: echo 'set(TARGETS_REQ_BRIDGE '$(basename -s.cpp $(grep -El '#include "(ramCanvas.hpp|MRcolor.hpp)"' */*.cpp || echo '""'))')'
 set(TARGETS_REQ_BRIDGE hello_world_mraster complex_color_image complex_magnitude_surface test_interp_scale)
 
-# CODE GEN: echo 'set(TARGETS_REQ_TREE '$(basename -s.cpp $(grep -El '#include "(MR_rect_tree.hpp)"' */*.cpp))')'
+# CODE GEN: echo 'set(TARGETS_REQ_TREE '$(basename -s.cpp $(grep -El '#include "(MR_rect_tree.hpp)"' */*.cpp || echo '""'))')'
 set(TARGETS_REQ_TREE hello_world_cell hello_world_mraster hello_world_tree_adaptive hello_world_tree_regular recipe-surf-plot-adapt recipe-surf-plot-norm recipe-surf-plot-rs-quad recipe-surf-plot-rs-tri complex_magnitude_surface curve_plot ear_surface ear_surface_glue implicit_curve_2d implicit_surface parametric_curve_3d parametric_surface_with_defects performance_with_large_surface surface_branch_glue surface_plot_annular_edge surface_plot_corner surface_plot_edge surface_plot_step surface_with_normals trefoil vector_field_3d flat_test_tree_01 nan_solver rect_fix_dup rect_fix_nan segment_folder triangle_folder tree_basics_15b1 tree_basics_15b3 tree_basics_7b1 tree_basics_7b2 tree_basics_7b3 tree_basics_7b4 tree_basics_7b5 tree_children tree_corners tree_neighbors)
 
-# CODE GEN: echo 'set(TARGETS_REQ_MRASTER '$(basename -s.cpp $(grep -El '#include "(ramCanvas.hpp|MRcolor.hpp)"' */*.cpp))')'
+# CODE GEN: echo 'set(TARGETS_REQ_MRASTER '$(basename -s.cpp $(grep -El '#include "(ramCanvas.hpp|MRcolor.hpp)"' */*.cpp || echo '""'))')'
 set(TARGETS_REQ_MRASTER hello_world_mraster complex_color_image complex_magnitude_surface test_interp_scale)
 
-# CODE GEN: echo 'set(TARGETS_REQ_MRASTER '$(basename -s.cpp $(grep -El '#include <gtest/gtest.h>' */*.cpp))')'
+# CODE GEN: echo 'set(TARGETS_REQ_MRASTER '$(basename -s.cpp $(grep -El '#include <gtest/gtest.h>' */*.cpp || echo '""'))')'
 set(TARGETS_REQ_GTEST check_cell_hexahedron check_cell_pyramid check_cell_quad check_cell_segment check_cell_triangle geomi_pnt_line_distance geomi_seg_isect_type geomr_pnt_line_distance geomr_pnt_pln_distance geomr_pnt_tri_distance tree_basics_15b1 tree_basics_15b3 tree_basics_7b1 tree_basics_7b2 tree_basics_7b3 tree_basics_7b4 tree_basics_7b5 tree_children tree_corners tree_neighbors)
 
 # Construct list of targets we can build
@@ -238,6 +241,18 @@ if(TARGETS_FTEST)
   )
 endif()
 
+if(TARGETS_UTEST)
+  add_custom_target(utests
+    DEPENDS ${TARGETS_UTEST}
+    COMMENT "Building Unit Tests"
+  )
+  add_custom_target(run-utests
+    DEPENDS ${TARGETS_UTEST}
+    COMMENT "Running Unit Tests"
+    COMMAND cmake --build . -t test
+  )
+endif()
+
 if(TARGETS_EXAMPLES_MIN OR TARGETS_EXAMPLES_CB OR TARGETS_EXAMPLES_VIZ)
   add_custom_target(examples-all
     DEPENDS ${TARGETS_EXAMPLES_MIN} ${TARGETS_EXAMPLES_CB} ${TARGETS_EXAMPLES_VIZ}
@@ -266,17 +281,7 @@ if(TARGETS_EXAMPLES_VIZ)
   )
 endif()
 
-if(TARGETS_UTEST)
-  add_custom_target(utests
-    DEPENDS ${TARGETS_UTEST}
-    COMMENT "Building Unit Tests"
-  )
-  add_custom_target(run-utests
-    DEPENDS ${TARGETS_UTEST}
-    COMMENT "Running Unit Tests"
-    COMMAND cmake --build . -t test
-  )
-endif()
+######################################################################################################################################################
 
 # CODE GEN: ~/MJR/core/codeBits/bin/src2orgListing ~/core/codeBits/cmake-template/include_doxygen-targets.cmake | sed 's/PROJECT_NAME/MRPTree/g; s/SRCP/"lib" "examples-lib3d" "examples" "examples-func-viz" "examples-cookbook"/'
 if(Doxygen_FOUND)
