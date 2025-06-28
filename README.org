@@ -40,15 +40,12 @@ Example Documentation:
    - g++: (Rev3, Built by MSYS2 project) 14.1.0
    - clang: 18.1.6
    - cmake: 3.29.5
-   - boost: 1.85.0-2 (For unit tests)
  - Debian 12.6
    - g++: (Debian 14-20240330-1) 14.0.1 20240330 (experimental) [master r14-9728-g6fc84f680d0]
    - cmake: 3.25.1
-   - boost: 1.83
  - Windows 11
    - Microsoft Visual Studio Community 2022 Version 17.10.5
    - cmake: 3.29.5
-   - boost: I haven't tried to integrate with boost yet!
 
 * Progress Updates
 
